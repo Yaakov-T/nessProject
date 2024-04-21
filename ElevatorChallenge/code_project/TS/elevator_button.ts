@@ -25,7 +25,6 @@ class elevatorButton {
         parent.appendChild(this.button);
     }
     orderElevator(): number {
-        // console.log(this.floorNumber);
         return this.elevatorMenagment.getOrder(this.floorNumber);
     }
 }

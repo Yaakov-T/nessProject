@@ -1,24 +1,20 @@
 class Elevator {
-    private m_elevatorElement: HTMLImageElement; 
-    // private m_elevatorElement: HTMLDivElement;
-    private m_currentFloor: number = 0;
+    private m_elevatorElement: HTMLImageElement;
     private m_sumOfTime: number = 0;
     private m_destinationQueue: number[];
     private m_timeToWait: number = 0;
     private m_XPossition: number = 0;
 
     constructor() {
-
         this.m_destinationQueue = [];
-
         this.m_elevatorElement = document.createElement('img');
-        this.m_elevatorElement.src = "./elements/elv.png";         
-        this.m_elevatorElement.classList.add('elevatorStyle');
-        this.addStyle();
+        this.aditAtributes();
     };
 
 
-    addStyle(): void {
+    aditAtributes(): void {
+        this.m_elevatorElement.src = "./elements/elv.png";
+        this.m_elevatorElement.classList.add('elevatorStyle');
         this.m_elevatorElement.style.height = "110px";
         this.m_elevatorElement.style.width = "110px";
         this.m_elevatorElement.style.bottom = `${this.m_XPossition}px`;
@@ -33,37 +29,36 @@ class Elevator {
     }
 
     addFloorToQueue(floor: number): void {
-        console.log(floor);
         this.m_destinationQueue.push(floor);
         const newTime = this.timeBetweenFloors(floor, this.m_destinationQueue[this.m_destinationQueue.length - 1])
         this.m_sumOfTime += (newTime + 4);
-        console.log("quque: " + this.m_destinationQueue);
-        console.log("sumOfTime: " + this.m_sumOfTime);
     }
     moveElevator(): void {
-        this.m_sumOfTime--;
-        if (this.m_timeToWait) {
+        if(this.m_timeToWait > 0) {
             this.m_timeToWait--;
         }
         else {
-            this.part();
+            this.addPart();
             this.m_elevatorElement.style.bottom = `${this.m_XPossition}px`
-            this.checkArrivalDestination();
+            if (this.checkArrivalDestination()) {
+                this.openDoor();
+            };
         }
     }
-    part(): void {
-        if (this.m_currentFloor < this.m_destinationQueue[0]) {
+    addPart(): void {
+        if (this.m_XPossition < this.m_destinationQueue[0]*120) {
             this.m_XPossition += 120;
         }
-        else if (this.m_currentFloor > this.m_destinationQueue[0]) {
+        else if (this.m_XPossition > this.m_destinationQueue[0]*120) {
             this.m_XPossition -= 120;
         }
     }
-    checkArrivalDestination(): void {
-        this.m_timeToWait = 4;
-        const newFloor = this.m_destinationQueue.shift()
-        if (newFloor)
-            this.m_currentFloor = newFloor;
+    checkArrivalDestination(): Boolean {
+        return (this.m_destinationQueue[0] * 120 == this.m_XPossition);
+        // this.m_timeToWait = 4;
+        // const newFloor = this.m_destinationQueue.shift()
+        // if (newFloor)
+        //     this.m_currentFloor = newFloor;
 
 
     }
@@ -79,9 +74,20 @@ class Elevator {
 
     }
     timeBetweenFloors(floor1: number, floor2: number): number {
-        if (floor1 < floor2)
-            return (floor2 - floor1) / 2;
+        if (floor1 < floor2) {
+          return (floor2 - floor1) / 2;
+        }
         return (floor1 - floor2) / 2;
     };
+
+    openDoor(): void {
+        // ding
+        this.m_timeToWait = 4;
+        const newFloor = this.m_destinationQueue.shift()
+        if (newFloor){
+
+        }
+
+    }
 }
 

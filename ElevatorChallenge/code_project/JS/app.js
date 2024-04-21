@@ -13,7 +13,7 @@ const createBuildings = () => {
 };
 const numBuildings = 1;
 const numFloors = 7;
-const numElevators = 3;
+const numElevators = 2;
 const buildingArr = [];
 const floorHeight = 120;
 const buildingManagement = document.getElementById("buildingManagement");

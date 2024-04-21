@@ -12,12 +12,10 @@ class ElevatorManagement {
         return this.elevatorsArea;
     }
     getOrder(floor) {
-        // console.log(floor);
         let minTime = this.elevators[0].timeWithNewFloor(floor);
         let elevatorIndex = 0;
         for (let i = 1; i < this.elevators.length; i++) {
             const time = this.elevators[i].timeWithNewFloor(floor);
-            console.log("time: " + time);
             if (time < minTime) {
                 minTime = time;
                 elevatorIndex = i;

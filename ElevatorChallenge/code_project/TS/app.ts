@@ -13,7 +13,7 @@ const createBuildings = () =>{
 
 const numBuildings = 1;
 const numFloors: number = 7;
-const numElevators: number = 3;
+const numElevators: number = 2;
 
 
 
@@ -32,7 +32,6 @@ const rander = (): void => {
 
     };
 };
-
 const run = setInterval(() => {
     buildingArr.forEach((building) => {
         building.run();
