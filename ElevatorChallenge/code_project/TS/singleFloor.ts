@@ -6,7 +6,7 @@ class SingleFloor {
     private blackLine: Line;
     private floorSpace: FloorSpace;
 
-    constructor(floorNumber: number,elevatorMenagment: ElevatorManagement) {
+    constructor(floorNumber: number ,elevatorMenagment: ElevatorManagement) {
         this.m_singleFloor = document.createElement('div');
         this.m_singleFloor.style.height = '100%';
         this.floorNumber = floorNumber;

@@ -1,91 +1,88 @@
 class Elevator {
-    private m_elevatorElement: HTMLImageElement;
-    private m_sumOfTime: number = 0;
-    private m_destinationQueue: number[];
-    private m_timeToWait: number = 0;
-    private m_XPossition: number = 0;
+    frime: number;
+    private ElevatorElement: HTMLImageElement;
+    private SumOfTime: number = 0;
+    private DestinationQueue: number[];
+    private CurrentFloor: number| undefined =0;
+    private TimeToWait: number = 0;
+    private XPossition: number = 0;
 
-    constructor() {
-        this.m_destinationQueue = [];
-        this.m_elevatorElement = document.createElement('img');
-        this.aditAtributes();
+    constructor(frime: number) {
+        this.frime = frime;
+        this.DestinationQueue = [];
+        this.ElevatorElement = this.createElevator();
     };
 
 
-    aditAtributes(): void {
-        this.m_elevatorElement.src = "./elements/elv.png";
-        this.m_elevatorElement.classList.add('elevatorStyle');
-        this.m_elevatorElement.style.height = "110px";
-        this.m_elevatorElement.style.width = "110px";
-        this.m_elevatorElement.style.bottom = `${this.m_XPossition}px`;
+    createElevator(): HTMLImageElement {
+        const elevatorElement: HTMLImageElement = document.createElement('img');
+        elevatorElement.src = "./elements/elv.png";
+        elevatorElement.classList.add('elevatorStyle');
+        elevatorElement.style.height = "110px";
+        elevatorElement.style.width = "110px";
+        elevatorElement.style.bottom = `${this.XPossition}px`;
+        return elevatorElement;
     };
 
     public get elevatorElement(): HTMLDivElement {
-        return this.m_elevatorElement;
+        return this.ElevatorElement;
     }
 
     appendToParent(parent: HTMLElement): void {
         parent.appendChild(this.elevatorElement);
     }
 
-    addFloorToQueue(floor: number): void {
-        this.m_destinationQueue.push(floor);
-        const newTime = this.timeBetweenFloors(floor, this.m_destinationQueue[this.m_destinationQueue.length - 1])
-        this.m_sumOfTime += (newTime + 4);
+    addNewFloor(floor: number): void {
+        this.DestinationQueue.push(floor);
+        const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
+        this.SumOfTime += (newTime + (4 * this.frime));
     }
     moveElevator(): void {
-        if(this.m_timeToWait > 0) {
-            this.m_timeToWait--;
+        if (this.TimeToWait > 0) {
+            this.TimeToWait--;
         }
         else {
             this.addPart();
-            this.m_elevatorElement.style.bottom = `${this.m_XPossition}px`
+            this.ElevatorElement.style.bottom = `${this.XPossition}px`
             if (this.checkArrivalDestination()) {
                 this.openDoor();
             };
         }
     }
     addPart(): void {
-        if (this.m_XPossition < this.m_destinationQueue[0]*120) {
-            this.m_XPossition += 120;
+        if (this.XPossition < this.DestinationQueue[0] * 120) {
+            this.XPossition += 120 / this.frime;
         }
-        else if (this.m_XPossition > this.m_destinationQueue[0]*120) {
-            this.m_XPossition -= 120;
+        else if (this.XPossition > this.DestinationQueue[0] * 120) {
+            this.XPossition -= 120 / this.frime;
         }
     }
     checkArrivalDestination(): Boolean {
-        return (this.m_destinationQueue[0] * 120 == this.m_XPossition);
-        // this.m_timeToWait = 4;
-        // const newFloor = this.m_destinationQueue.shift()
-        // if (newFloor)
-        //     this.m_currentFloor = newFloor;
-
-
+        return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 1;
     }
 
-    timeWithNewFloor(floor: number): number {
+    checkTimeWithFloor(floor: number): number {
         {
-            if (this.m_destinationQueue[this.m_destinationQueue.length - 1]) {
-                const timeBetween = this.timeBetweenFloors(floor, this.m_destinationQueue[this.m_destinationQueue.length - 1])
-                return this.m_sumOfTime + timeBetween;
+            if(this.DestinationQueue.length > 0) {
+                const timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
+                return this.SumOfTime + timeBetween;
             }
-            return this.m_sumOfTime;
+            return this.timeBetweenFloors(floor, this.CurrentFloor);
         }
 
     }
-    timeBetweenFloors(floor1: number, floor2: number): number {
-        if (floor1 < floor2) {
-          return (floor2 - floor1) / 2;
+    timeBetweenFloors(floor1: number, floor2: number |undefined): number {
+        if (floor2 || floor2 == 0) {
+          return ((Math.abs(floor2 - floor1)) / 2);
         }
-        return (floor1 - floor2) / 2;
+        return 0;
     };
 
     openDoor(): void {
         // ding
-        this.m_timeToWait = 4;
-        const newFloor = this.m_destinationQueue.shift()
-        if (newFloor){
-
+        this.TimeToWait = 4 * this.frime;    
+        if (this.DestinationQueue.length > 0) {
+            this.CurrentFloor = this.DestinationQueue.shift()
         }
 
     }

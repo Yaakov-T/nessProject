@@ -1,9 +1,10 @@
 "use strict";
 class ElevatorManagement {
-    constructor(numElevators) {
+    constructor(numElevators, frime) {
+        this.frime = frime;
         this.elevators = [];
         for (let i = 0; i < numElevators; i++) {
-            this.elevators.push(new Elevator());
+            this.elevators.push(new Elevator(this.frime));
         }
         this.elevatorsArea = document.createElement('div');
         this.elevationArea.classList.add("rowFlex");
@@ -12,16 +13,16 @@ class ElevatorManagement {
         return this.elevatorsArea;
     }
     getOrder(floor) {
-        let minTime = this.elevators[0].timeWithNewFloor(floor);
+        let minTime = this.elevators[0].checkTimeWithFloor(floor);
         let elevatorIndex = 0;
-        for (let i = 1; i < this.elevators.length; i++) {
-            const time = this.elevators[i].timeWithNewFloor(floor);
+        for (let i = 1; i < this.elevators.length; ++i) {
+            const time = this.elevators[i].checkTimeWithFloor(floor);
             if (time < minTime) {
                 minTime = time;
                 elevatorIndex = i;
             }
         }
-        this.elevators[elevatorIndex].addFloorToQueue(floor);
+        this.elevators[elevatorIndex].addNewFloor(floor);
         return minTime;
     }
     appendToParent(parent) {

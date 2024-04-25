@@ -1,33 +1,44 @@
 "use strict";
 class Building {
-    constructor(numFloors, numElevators, floorHeight) {
-        this.currentBuilding = document.createElement("div");
-        this.currentBuilding.style.height = `${(floorHeight) * numFloors}px`;
-        this.floors = [];
-        this.elevatorManagement = new ElevatorManagement(numElevators);
-        this.elevatorManagement.elevationArea.style.height = `${floorHeight * numFloors}px`;
+    constructor(numFloors, numElevators, floorHeight, frime) {
+        this.frime = frime;
+        this.floorsarea = document.createElement("div");
+        this.currentBuilding = this.createBuild();
+        this.elevatorManagement = this.createElevatorMenage();
+        this.floors = this.createFloors();
+    }
+    createBuild() {
+        const currentBuilding = document.createElement("div");
+        currentBuilding.style.height = `${(floorHeight) * numFloors}px`;
+        return currentBuilding;
+    }
+    createElevatorMenage() {
+        const elevatorManagement = new ElevatorManagement(numElevators, this.frime);
+        elevatorManagement.elevationArea.style.height = `${floorHeight * numFloors}px`;
+        return elevatorManagement;
+    }
+    createFloors() {
+        this.floorsarea.style.maxWidth = "50%";
+        const floors = [];
         for (let i = 0; i < numFloors; i++) {
-            this.floors.push(new SingleFloor(numFloors - i - 1, this.elevatorManagement));
+            floors.push(new SingleFloor(numFloors - i - 1, this.elevatorManagement));
         }
+        return floors;
     }
     get mycurrentBuilding() {
         return this.currentBuilding;
     }
     appendToParent(parent) {
-        const buildingContainer = document.createElement("div");
-        buildingContainer.classList.add("rowFlex");
-        const floorContainer = document.createElement("div");
-        floorContainer.classList.add("columFlex");
-        floorContainer.style.width = "100%";
+        this.currentBuilding.classList.add("rowFlex");
+        this.floorsarea.classList.add("columFlex");
         this.floors.forEach((floor) => {
-            floor.appendToParent(floorContainer);
-            buildingContainer.appendChild(floorContainer);
+            floor.appendToParent(this.floorsarea);
         });
+        this.currentBuilding.appendChild(this.floorsarea);
         const elevatorContainer = document.createElement("div");
         elevatorContainer.classList.add("elevator-management");
         this.elevatorManagement.appendToParent(elevatorContainer);
-        buildingContainer.appendChild(elevatorContainer);
-        this.currentBuilding.appendChild(buildingContainer);
+        this.currentBuilding.appendChild(elevatorContainer);
         parent.appendChild(this.currentBuilding);
     }
     run() {

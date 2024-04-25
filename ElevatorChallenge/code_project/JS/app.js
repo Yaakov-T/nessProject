@@ -5,31 +5,37 @@ const init = () => {
 };
 const createBuildings = () => {
     for (let i = 0; i < numBuildings; i++) {
-        buildingArr.push(new Building(numFloors, numElevators, floorHeight));
+        buildingArr.push(new Building(numFloors, numElevators, floorHeight, frime));
     }
-    buildingArr.forEach((building) => {
-        building.mycurrentBuilding.classList.add("rowFlex");
-    });
 };
-const numBuildings = 1;
+const frime = 100;
+const numBuildings = 3;
 const numFloors = 7;
 const numElevators = 2;
 const buildingArr = [];
 const floorHeight = 120;
-const buildingManagement = document.getElementById("buildingManagement");
+const DOMElement = document.getElementById("buildingManagement");
+const buildingManagement = document.createElement("div");
+if (DOMElement) {
+    DOMElement.style.alignItems = ("center");
+    DOMElement.style.width = (`${window.innerWidth}px`);
+    DOMElement.style.paddingLeft = (`5%`);
+    DOMElement.style.paddingRight = (`5%`);
+    DOMElement.appendChild(buildingManagement);
+    buildingManagement.style.display = ("flex");
+    buildingManagement.style.justifyContent = ("space-between");
+}
 const rander = () => {
-    if (buildingManagement) {
-        buildingManagement.innerHTML = '';
-        // Append each building to buildingManagement
-        buildingArr.forEach((building) => {
-            building.appendToParent(buildingManagement);
-        });
-    }
-    ;
+    buildingManagement.innerHTML = '';
+    // Append each building to buildingManagement
+    buildingArr.forEach((building) => {
+        building.mycurrentBuilding.style.maxWidth = `${90 / numBuildings}%`;
+        building.appendToParent(buildingManagement);
+    });
 };
 const run = setInterval(() => {
     buildingArr.forEach((building) => {
         building.run();
     });
-}, 500);
+}, 500 / frime);
 init();

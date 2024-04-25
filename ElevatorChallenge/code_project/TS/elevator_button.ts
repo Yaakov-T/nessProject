@@ -1,8 +1,8 @@
 
 class elevatorButton {
+    floorNumber: number;
     elevatorMenagment: ElevatorManagement;
     button: HTMLButtonElement;
-    floorNumber: number;
 
     constructor(floorNumber: number, elevatorMenagment: ElevatorManagement) {
         this.floorNumber = floorNumber;
