@@ -59,9 +59,10 @@ class Elevator {
         {
             if (this.DestinationQueue.length > 0) {
                 const timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
-                return this.SumOfTime + timeBetween;
+                return (this.SumOfTime) / this.frime + timeBetween;
             }
-            return this.timeBetweenFloors(floor, this.CurrentFloor);
+            const timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
+            return (this.SumOfTime) / this.frime + timeBetween;
         }
     }
     timeBetweenFloors(floor1, floor2) {

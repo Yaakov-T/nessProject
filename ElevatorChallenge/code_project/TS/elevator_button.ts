@@ -3,11 +3,13 @@ class elevatorButton {
     floorNumber: number;
     elevatorMenagment: ElevatorManagement;
     button: HTMLButtonElement;
+    arrivalDisplay : ArrivalDisplay
 
-    constructor(floorNumber: number, elevatorMenagment: ElevatorManagement) {
+    constructor(floorNumber: number, elevatorMenagment: ElevatorManagement, arrivalDisplay: ArrivalDisplay) {
         this.floorNumber = floorNumber;
         this.elevatorMenagment = elevatorMenagment;
         this.button = this.createButton();
+        this.arrivalDisplay  = arrivalDisplay;
     }
     createButton(): HTMLButtonElement {
         const button = document.createElement('button');
@@ -15,7 +17,6 @@ class elevatorButton {
         button.textContent = `${this.floorNumber}`;
         button.disabled = false;
         button.addEventListener('click', () => {
-            button.disabled = false;
             this.orderElevator();
         });
         return button;
@@ -24,7 +25,9 @@ class elevatorButton {
     appendToParent(parent: HTMLElement): void {
         parent.appendChild(this.button);
     }
-    orderElevator(): number {
-        return this.elevatorMenagment.getOrder(this.floorNumber);
+    orderElevator(): void {
+        const display = this.elevatorMenagment.getOrder(this.floorNumber);
+        this.arrivalDisplay.setTime(display);
     }
+
 }

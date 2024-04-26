@@ -3,7 +3,7 @@ class Elevator {
     private ElevatorElement: HTMLImageElement;
     private SumOfTime: number = 0;
     private DestinationQueue: number[];
-    private CurrentFloor: number| undefined =0;
+    private CurrentFloor: number | undefined = 0;
     private TimeToWait: number = 0;
     private XPossition: number = 0;
 
@@ -63,24 +63,26 @@ class Elevator {
 
     checkTimeWithFloor(floor: number): number {
         {
-            if(this.DestinationQueue.length > 0) {
+            if (this.DestinationQueue.length > 0) {
                 const timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
-                return this.SumOfTime + timeBetween;
+                return (this.SumOfTime) / this.frime + timeBetween;
             }
-            return this.timeBetweenFloors(floor, this.CurrentFloor);
+            const timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor)
+            return (this.SumOfTime) / this.frime + timeBetween;
+
         }
 
     }
-    timeBetweenFloors(floor1: number, floor2: number |undefined): number {
+    timeBetweenFloors(floor1: number, floor2: number | undefined): number {
         if (floor2 || floor2 == 0) {
-          return ((Math.abs(floor2 - floor1)) / 2);
+            return ((Math.abs(floor2 - floor1)) / 2);
         }
         return 0;
     };
 
     openDoor(): void {
         // ding
-        this.TimeToWait = 4 * this.frime;    
+        this.TimeToWait = 4 * this.frime;
         if (this.DestinationQueue.length > 0) {
             this.CurrentFloor = this.DestinationQueue.shift()
         }

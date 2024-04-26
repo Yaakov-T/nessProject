@@ -9,7 +9,7 @@ const createBuildings = () => {
     }
 };
 const frime = 100;
-const numBuildings = 3;
+const numBuildings = 1;
 const numFloors = 7;
 const numElevators = 2;
 const buildingArr = [];

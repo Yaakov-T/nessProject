@@ -41,5 +41,25 @@
     height: "110px";
     width: "110px";
     position: absolute;
-    width: 100%;
+}
+
+.ArrivalDisplay {
+    margin-left: 5px;
+    height: 80px; /* Use pixel value without quotes */
+    width: 80px; /* Use pixel value without quotes */
+    display: flex; /* Use "display: flex;" to enable flexbox */
+    color: red; /* Text color */
+    border: 5px inset rgb(149, 176, 175); /* Border style */
+    border-radius: 15%;
+    background-color: #000000; /* Background color */
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+    font-family: 'Seven Segment', sans-serif;
+}
+
+p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 45px; /* Font size */
+    line-height: 1.5; /* Line height (spacing between lines) */
 }

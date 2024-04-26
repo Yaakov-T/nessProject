@@ -27,6 +27,7 @@ class Building {
 
     createFloors():SingleFloor[]{
         this.floorsarea.style.maxWidth = "50%"
+        this.floorsarea.style.minWidth = "120px"
 
         const floors :SingleFloor[] =[];
         
@@ -59,6 +60,9 @@ class Building {
     }
     run(): void {
         this.elevatorManagement.moveAllElevators();
+        this.floors.forEach((SingleFloor)=>{
+            SingleFloor.run();
+        })
     }
 }
 

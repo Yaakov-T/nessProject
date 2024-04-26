@@ -8,7 +8,7 @@ const createBuildings = () => {
     }
 }
 const frime = 100;
-const numBuildings = 3;
+const numBuildings = 1;
 const numFloors: number = 7;
 const numElevators: number = 2;
 

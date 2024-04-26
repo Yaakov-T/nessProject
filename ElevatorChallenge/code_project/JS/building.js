@@ -19,6 +19,7 @@ class Building {
     }
     createFloors() {
         this.floorsarea.style.maxWidth = "50%";
+        this.floorsarea.style.minWidth = "120px";
         const floors = [];
         for (let i = 0; i < numFloors; i++) {
             floors.push(new SingleFloor(numFloors - i - 1, this.elevatorManagement));
@@ -43,5 +44,8 @@ class Building {
     }
     run() {
         this.elevatorManagement.moveAllElevators();
+        this.floors.forEach((SingleFloor) => {
+            SingleFloor.run();
+        });
     }
 }

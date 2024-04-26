@@ -1,9 +1,10 @@
 "use strict";
 class elevatorButton {
-    constructor(floorNumber, elevatorMenagment) {
+    constructor(floorNumber, elevatorMenagment, arrivalDisplay) {
         this.floorNumber = floorNumber;
         this.elevatorMenagment = elevatorMenagment;
         this.button = this.createButton();
+        this.arrivalDisplay = arrivalDisplay;
     }
     createButton() {
         const button = document.createElement('button');
@@ -11,7 +12,6 @@ class elevatorButton {
         button.textContent = `${this.floorNumber}`;
         button.disabled = false;
         button.addEventListener('click', () => {
-            button.disabled = false;
             this.orderElevator();
         });
         return button;
@@ -20,6 +20,7 @@ class elevatorButton {
         parent.appendChild(this.button);
     }
     orderElevator() {
-        return this.elevatorMenagment.getOrder(this.floorNumber);
+        const display = this.elevatorMenagment.getOrder(this.floorNumber);
+        this.arrivalDisplay.setTime(display);
     }
 }
