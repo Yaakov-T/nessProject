@@ -1,13 +1,26 @@
 "use strict";
 class SingleFloor {
-    constructor(floorNumber, elevatorMenagment) {
+    constructor(Parent, floorNumber) {
         this.SingleFloor = document.createElement('div');
+        this.parent = Parent;
         this.SingleFloor.style.height = '100%';
         this.floorNumber = floorNumber;
         this.arrivalDisplay = new ArrivalDisplay();
-        this.elevatorCallButton = new elevatorButton(this.floorNumber, elevatorMenagment, this.arrivalDisplay);
+        this.elevatorCallButton = new elevatorButton(this, this.arrivalDisplay);
         this.blackLine = new Line();
         this.floorSpace = new FloorSpace();
+    }
+    getfloorNumber() {
+        return this.floorNumber;
+    }
+    setDisplay(time) {
+        this.arrivalDisplay.setTime(time);
+    }
+    getOrder() {
+        const display = this.parent.getOrder(this.floorNumber);
+        if (display) {
+            this.setDisplay(display);
+        }
     }
     get singleFloor() {
         return this.SingleFloor;

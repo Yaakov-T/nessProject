@@ -1,17 +1,15 @@
 "use strict";
+let sett = new settings();
+;
 const init = () => {
     createBuildings();
     rander();
 };
 const createBuildings = () => {
-    for (let i = 0; i < numBuildings; i++) {
-        buildingArr.push(new Building(numFloors, numElevators, floorHeight, frime));
+    for (let i = 0; i < sett.numBuildings; i++) {
+        buildingArr.push(new Building(floorHeight, sett));
     }
 };
-const frime = 100;
-const numBuildings = 1;
-const numFloors = 7;
-const numElevators = 2;
 const buildingArr = [];
 const floorHeight = 120;
 const DOMElement = document.getElementById("buildingManagement");
@@ -29,7 +27,7 @@ const rander = () => {
     buildingManagement.innerHTML = '';
     // Append each building to buildingManagement
     buildingArr.forEach((building) => {
-        building.mycurrentBuilding.style.maxWidth = `${90 / numBuildings}%`;
+        building.mycurrentBuilding.style.maxWidth = `${90 / sett.numBuildings}%`;
         building.appendToParent(buildingManagement);
     });
 };
@@ -37,5 +35,5 @@ const run = setInterval(() => {
     buildingArr.forEach((building) => {
         building.run();
     });
-}, 500 / frime);
+}, 500 / sett.frime);
 init();

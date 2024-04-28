@@ -1,17 +1,14 @@
+let sett : settings= new settings();;
+
 const init = (): void => {
     createBuildings();
     rander();
 };
 const createBuildings = () => {
-    for (let i = 0; i < numBuildings; i++) {
-        buildingArr.push(new Building(numFloors, numElevators, floorHeight, frime));
+    for (let i = 0; i < sett.numBuildings; i++) {
+        buildingArr.push(new Building(floorHeight, sett));
     }
 }
-const frime = 100;
-const numBuildings = 1;
-const numFloors: number = 7;
-const numElevators: number = 2;
-
 
 
 const buildingArr: Building[] = [];
@@ -30,10 +27,9 @@ if (DOMElement) {
 }
 const rander = (): void => {
         buildingManagement.innerHTML = '';
-
         // Append each building to buildingManagement
         buildingArr.forEach((building) => {
-            building.mycurrentBuilding.style.maxWidth=`${90/numBuildings}%`
+            building.mycurrentBuilding.style.maxWidth=`${90/sett.numBuildings}%`
             building.appendToParent(buildingManagement);
         });
 
@@ -44,7 +40,7 @@ const run = setInterval(() => {
     buildingArr.forEach((building) => {
         building.run();
     })
-}, 500 / frime);
+}, 500 / sett.frime);
 
 init();
 

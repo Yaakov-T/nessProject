@@ -10,15 +10,16 @@ class ArrivalDisplay {
         this.waiteTime = time;
     }
     updateDisplay() {
-        this.display.innerHTML = `<p>${this.waiteTime.toString()}</p>`;
-        // console.log("hii");
+        this.display.innerHTML = ` <p>${(Math.ceil(this.waiteTime).toString())}</p>`;
     }
     reduceTime() {
-        this.waiteTime--;
+        this.waiteTime -= 1 / 200;
     }
     run() {
         if (this.waiteTime > 0) {
             this.reduceTime();
+        }
+        if (this.waiteTime > 0) {
         }
         this.updateDisplay();
     }

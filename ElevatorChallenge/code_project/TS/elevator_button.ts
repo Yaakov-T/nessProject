@@ -1,15 +1,15 @@
 
 class elevatorButton {
     floorNumber: number;
-    elevatorMenagment: ElevatorManagement;
+    parent: SingleFloor;
     button: HTMLButtonElement;
-    arrivalDisplay : ArrivalDisplay
+    arrivalDisplay: ArrivalDisplay
 
-    constructor(floorNumber: number, elevatorMenagment: ElevatorManagement, arrivalDisplay: ArrivalDisplay) {
-        this.floorNumber = floorNumber;
-        this.elevatorMenagment = elevatorMenagment;
+    constructor(parent: SingleFloor, arrivalDisplay: ArrivalDisplay) {
+        this.parent = parent;
+        this.floorNumber = this.parent.getfloorNumber();
         this.button = this.createButton();
-        this.arrivalDisplay  = arrivalDisplay;
+        this.arrivalDisplay = arrivalDisplay;
     }
     createButton(): HTMLButtonElement {
         const button = document.createElement('button');
@@ -26,8 +26,6 @@ class elevatorButton {
         parent.appendChild(this.button);
     }
     orderElevator(): void {
-        const display = this.elevatorMenagment.getOrder(this.floorNumber);
-        this.arrivalDisplay.setTime(display);
+        this.parent.getOrder();
     }
-
 }

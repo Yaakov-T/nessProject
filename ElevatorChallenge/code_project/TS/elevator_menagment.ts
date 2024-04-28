@@ -1,13 +1,13 @@
-class ElevatorManagement {
-    frime : number;
+class singleFloor {
+    private settings: settings;
     private elevatorsArea: HTMLDivElement;
     private elevators: Elevator[];
 
-    constructor(numElevators: number, frime : number) {
-        this.frime = frime;
+    constructor(numElevators: number, settings: settings) {
+        this.settings = settings;
         this.elevators = [];
         for (let i = 0; i < numElevators; i++) {
-            this.elevators.push(new Elevator(this.frime));
+            this.elevators.push(new Elevator(this.settings));
         }
         this.elevatorsArea = document.createElement('div');
         this.elevationArea.classList.add("rowFlex");
@@ -15,10 +15,15 @@ class ElevatorManagement {
     get elevationArea(): HTMLDivElement {
         return this.elevatorsArea;
     }
-    getOrder(floor: number): number {
-        let minTime:number = this.elevators[0].checkTimeWithFloor(floor);
+    getOrder(floor: number): number| false {
+        // let minTime:number = this.elevators[0].checkTimeWithFloor(floor);
+        let minTime:number = 100;
         let elevatorIndex = 0;
-        for(let i =1 ; i < this.elevators.length; ++i) {
+        for(let i =0 ; i < this.elevators.length; ++i) {
+            console.log(`elevator: ${i}`);
+            if(this.elevators[i].including(floor)){
+                return false;
+            }
             const time: number = this.elevators[i].checkTimeWithFloor(floor)
             if( time < minTime){
                 minTime = time;

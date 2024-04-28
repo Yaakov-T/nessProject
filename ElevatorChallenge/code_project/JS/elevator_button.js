@@ -1,8 +1,8 @@
 "use strict";
 class elevatorButton {
-    constructor(floorNumber, elevatorMenagment, arrivalDisplay) {
-        this.floorNumber = floorNumber;
-        this.elevatorMenagment = elevatorMenagment;
+    constructor(parent, arrivalDisplay) {
+        this.parent = parent;
+        this.floorNumber = this.parent.getfloorNumber();
         this.button = this.createButton();
         this.arrivalDisplay = arrivalDisplay;
     }
@@ -20,7 +20,6 @@ class elevatorButton {
         parent.appendChild(this.button);
     }
     orderElevator() {
-        const display = this.elevatorMenagment.getOrder(this.floorNumber);
-        this.arrivalDisplay.setTime(display);
+        this.parent.getOrder();
     }
 }

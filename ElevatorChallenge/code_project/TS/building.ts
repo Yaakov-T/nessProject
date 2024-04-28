@@ -2,37 +2,41 @@ class Building {
     private currentBuilding: HTMLDivElement;
     private floorsarea: HTMLDivElement;
     private floors: SingleFloor[];
-    private elevatorManagement: ElevatorManagement;
-    frime:number;
+    private elevatorManagement: singleFloor;
+    private settings: settings;
 
-    constructor(numFloors: number, numElevators: number, floorHeight: number ,frime:number) {
-        this.frime = frime;
+    constructor(floorHeight: number, settings: settings) {
+        this.settings= settings;
         this.floorsarea = document.createElement("div");
-        this.currentBuilding = this.createBuild();
-        this.elevatorManagement = this.createElevatorMenage();
+        this.currentBuilding = this.createBuild(floorHeight);
+        this.elevatorManagement = this.createElevatorMenage( floorHeight,);
         this.floors = this.createFloors();
-
     }
-    createBuild():HTMLDivElement{
-        const currentBuilding :HTMLDivElement = document.createElement("div");
-        currentBuilding.style.height = `${(floorHeight) * numFloors}px`;
+
+    getOrder(floorNum: number): number | false {
+        return this.elevatorManagement.getOrder(floorNum);
+    }
+
+    createBuild(floorHeight: number): HTMLDivElement {
+        const currentBuilding: HTMLDivElement = document.createElement("div");
+        currentBuilding.style.height = `${(floorHeight) * this.settings.numFloors}px`;
         return currentBuilding;
     }
 
-    createElevatorMenage():ElevatorManagement{
-        const elevatorManagement = new ElevatorManagement(numElevators , this.frime);
-        elevatorManagement.elevationArea.style.height = `${floorHeight * numFloors}px`;
+    createElevatorMenage(floorHeight:number): singleFloor {
+        const elevatorManagement = new singleFloor(this.settings.numElevators, this.settings);
+        elevatorManagement.elevationArea.style.height = `${floorHeight * this.settings.numFloors}px`;
         return elevatorManagement;
     }
 
-    createFloors():SingleFloor[]{
+    createFloors(): SingleFloor[] {
         this.floorsarea.style.maxWidth = "50%"
         this.floorsarea.style.minWidth = "120px"
 
-        const floors :SingleFloor[] =[];
-        
-        for (let i = 0; i < numFloors; i++) {
-            floors.push(new SingleFloor(numFloors - i - 1, this.elevatorManagement));
+        const floors: SingleFloor[] = [];
+
+        for (let i = 0; i < this.settings.numFloors; i++) {
+            floors.push(new SingleFloor(this, this.settings.numFloors - i - 1));
         }
         return floors;
     }
@@ -60,7 +64,7 @@ class Building {
     }
     run(): void {
         this.elevatorManagement.moveAllElevators();
-        this.floors.forEach((SingleFloor)=>{
+        this.floors.forEach((SingleFloor) => {
             SingleFloor.run();
         })
     }

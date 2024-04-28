@@ -1,20 +1,34 @@
 
 class SingleFloor {
-    private SingleFloor: HTMLDivElement;
+    private SingleFloor: HTMLDivElement= document.createElement('div');
+    private parent: Building;
     private floorNumber: number;
     private elevatorCallButton: elevatorButton;
     private blackLine: Line;
     private floorSpace: FloorSpace;
     private arrivalDisplay: ArrivalDisplay;
 
-    constructor(floorNumber: number ,elevatorMenagment: ElevatorManagement) {
-        this.SingleFloor = document.createElement('div');
+    constructor(Parent: Building ,floorNumber: number) {
+        this.parent = Parent;
         this.SingleFloor.style.height = '100%';
         this.floorNumber = floorNumber;
         this.arrivalDisplay = new ArrivalDisplay();
-        this.elevatorCallButton = new elevatorButton(this.floorNumber,elevatorMenagment , this.arrivalDisplay);
+        this.elevatorCallButton = new elevatorButton(this, this.arrivalDisplay);
         this.blackLine = new Line();
         this.floorSpace = new FloorSpace();
+    }
+    getfloorNumber(): number {
+        return this.floorNumber;
+    }
+
+    setDisplay(time: number) {
+        this.arrivalDisplay.setTime(time);
+    }
+    getOrder(): void {
+        const display: number | false = this.parent.getOrder(this.floorNumber);
+        if (display) {
+            this.setDisplay(display);
+        }
     }
     get singleFloor():HTMLDivElement{
         return this.SingleFloor;
