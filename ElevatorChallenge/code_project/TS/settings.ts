@@ -1,5 +1,5 @@
 class settings {
-    private Frime: number = 100;
+    private Frime: number = 50;
     private NumBuildings: number = 1;
     private NumFloors: number = 7;
     private NumElevators: number = 3;

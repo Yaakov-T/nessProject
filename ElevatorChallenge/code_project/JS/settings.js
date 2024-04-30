@@ -1,7 +1,7 @@
 "use strict";
 class settings {
     constructor() {
-        this.Frime = 100;
+        this.Frime = 50;
         this.NumBuildings = 1;
         this.NumFloors = 7;
         this.NumElevators = 3;
