@@ -4,7 +4,7 @@ class settings {
         this.Frime = 100;
         this.NumBuildings = 1;
         this.NumFloors = 7;
-        this.NumElevators = 1;
+        this.NumElevators = 3;
         this.elevatorSRC = `./elements/elv.png`;
         this.audioSRC = `./elements/ding.mp3`;
     }

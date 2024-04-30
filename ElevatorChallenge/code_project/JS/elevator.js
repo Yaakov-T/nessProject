@@ -82,7 +82,7 @@ class Elevator {
             else {
                 timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
             }
-            return (this.SumOfTime) / this.settings.frime / 2 + timeBetween;
+            return (this.SumOfTime + timeBetween);
         }
     }
     timeBetweenFloors(floor1, floor2) {

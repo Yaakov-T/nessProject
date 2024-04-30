@@ -2,7 +2,7 @@ class settings {
     private Frime: number = 100;
     private NumBuildings: number = 1;
     private NumFloors: number = 7;
-    private NumElevators: number = 1;
+    private NumElevators: number = 3;
     private elevatorSRC: string = `./elements/elv.png`
     private audioSRC: string = `./elements/ding.mp3`
 

@@ -41,8 +41,8 @@ class Elevator {
     appendToParent(parent: HTMLElement): void {
         parent.appendChild(this.elevatorElement);
     }
-    timeToStay():number{
-        return 4* this.settings.frime;
+    timeToStay(): number {
+        return 4 * this.settings.frime;
     }
     addNewFloor(floor: number): number {
         const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
@@ -52,7 +52,7 @@ class Elevator {
     }
     run(): void {
         if (this.SumOfTime) {
-          this.SumOfTime--;
+            this.SumOfTime--;
         }
         if (this.TimeToWait > 0) {
             this.TimeToWait--;
@@ -83,18 +83,18 @@ class Elevator {
         {
             let timeBetween: number;
             if (this.DestinationQueue.length > 0) {
-                timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
+                timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
             }
             else {
-                timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor)
+                timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
             }
-            return (this.SumOfTime) / this.settings.frime / 2 + timeBetween;
+            return (this.SumOfTime + timeBetween);
         }
 
     }
     timeBetweenFloors(floor1: number, floor2: number | undefined): number {
         if (floor2 || floor2 == 0) {
-            return ((Math.abs(floor2 - floor1)) / 2)*this.settings.frime;
+            return ((Math.abs(floor2 - floor1)) / 2) * this.settings.frime;
         }
         return this.timeBetweenFloors(floor1, this.CurrentFloor);
     };
