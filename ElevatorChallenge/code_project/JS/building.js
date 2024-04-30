@@ -16,8 +16,8 @@ class Building {
         return currentBuilding;
     }
     createElevatorMenage(floorHeight) {
-        const elevatorManagement = new singleFloor(this.settings.numElevators, this.settings);
-        elevatorManagement.elevationArea.style.height = `${floorHeight * this.settings.numFloors}px`;
+        const elevatorManagement = new elevatorMenagment(this.settings.numElevators, this);
+        elevatorManagement.elevatorsArea.style.height = `${floorHeight * this.settings.numFloors}px`;
         return elevatorManagement;
     }
     createFloors() {
@@ -25,7 +25,7 @@ class Building {
         this.floorsarea.style.minWidth = "120px";
         const floors = [];
         for (let i = 0; i < this.settings.numFloors; i++) {
-            floors.push(new SingleFloor(this, this.settings.numFloors - i - 1));
+            floors.push(new SingleFloor(this, (this.settings.numFloors - i - 1)));
         }
         return floors;
     }
@@ -46,7 +46,7 @@ class Building {
         parent.appendChild(this.currentBuilding);
     }
     run() {
-        this.elevatorManagement.moveAllElevators();
+        this.elevatorManagement.run();
         this.floors.forEach((SingleFloor) => {
             SingleFloor.run();
         });

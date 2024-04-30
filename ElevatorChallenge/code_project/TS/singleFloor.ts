@@ -7,12 +7,14 @@ class SingleFloor {
     private blackLine: Line;
     private floorSpace: FloorSpace;
     private arrivalDisplay: ArrivalDisplay;
+    private settings : settings;
 
     constructor(Parent: Building ,floorNumber: number) {
         this.parent = Parent;
+        this.settings = this.parent.settings;
         this.SingleFloor.style.height = '100%';
         this.floorNumber = floorNumber;
-        this.arrivalDisplay = new ArrivalDisplay();
+        this.arrivalDisplay = new ArrivalDisplay(this.settings);
         this.elevatorCallButton = new elevatorButton(this, this.arrivalDisplay);
         this.blackLine = new Line();
         this.floorSpace = new FloorSpace();

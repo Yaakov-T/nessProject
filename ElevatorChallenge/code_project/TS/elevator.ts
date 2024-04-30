@@ -1,19 +1,23 @@
 class Elevator {
+    private parent: elevatorMenagment;
     private ElevatorElement: HTMLImageElement;
     private SumOfTime: number = 0;
     private DestinationQueue: number[];
     private CurrentFloor: number | undefined = 0;
     private TimeToWait: number = 0;
     private XPossition: number = 0;
-    private audioElement: HTMLAudioElement = new Audio("./elements/ding.mp3");
+    private audioElement: HTMLAudioElement;
     private settings: settings;
 
-    constructor(settings: settings) {
-        this.settings = settings;
+    constructor(parent: elevatorMenagment) {
+        this.parent = parent;
+        this.settings = this.parent.settings;
+        this.audioElement = new Audio(this.settings.audio);
         this.DestinationQueue = [];
         this.ElevatorElement = this.createElevator();
     };
 
+    // check if the floor in the argument is exists in the elevator
     including(floor: number) {
         return (floor === this.CurrentFloor ||
             this.DestinationQueue.includes(floor))
@@ -21,7 +25,7 @@ class Elevator {
     }
     createElevator(): HTMLImageElement {
         const elevatorElement: HTMLImageElement = document.createElement('img');
-        elevatorElement.src = "./elements/elv.png";
+        elevatorElement.src = this.settings.elevator;
         elevatorElement.classList.add('elevatorStyle');
         elevatorElement.style.height = "110px";
         elevatorElement.style.width = "110px";
@@ -29,20 +33,24 @@ class Elevator {
         return elevatorElement;
     };
 
+    //Allows to receive the wrapping element and perform operations on it
     public get elevatorElement(): HTMLDivElement {
         return this.ElevatorElement;
     }
-
+    //push the elementto the screen using the parents element
     appendToParent(parent: HTMLElement): void {
         parent.appendChild(this.elevatorElement);
     }
-
-    addNewFloor(floor: number): void {
-        this.DestinationQueue.push(floor);
-        const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
-        this.SumOfTime += ((newTime + 4) * this.settings.frime);
+    timeToStay():number{
+        return 4* this.settings.frime;
     }
-    moveElevator(): void {
+    addNewFloor(floor: number): number {
+        const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
+        this.SumOfTime += (newTime + this.timeToStay());
+        this.DestinationQueue.push(floor);
+        return this.SumOfTime - this.timeToStay();
+    }
+    run(): void {
         if (this.SumOfTime) {
           this.SumOfTime--;
         }
@@ -51,6 +59,7 @@ class Elevator {
         }
         else {
             this.audioElement.pause();
+            this.audioElement.currentTime = 0; // Reset playback to the beginning
             this.addPart();
             this.ElevatorElement.style.bottom = `${this.XPossition}px`
             if (this.checkArrivalDestination()) {
@@ -79,14 +88,13 @@ class Elevator {
             else {
                 timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor)
             }
-            console.log(`timeBetween: ${timeBetween}/${this.settings.frime}; sum: ${this.SumOfTime}`)
             return (this.SumOfTime) / this.settings.frime / 2 + timeBetween;
         }
 
     }
     timeBetweenFloors(floor1: number, floor2: number | undefined): number {
         if (floor2 || floor2 == 0) {
-            return ((Math.abs(floor2 - floor1)) / 2);
+            return ((Math.abs(floor2 - floor1)) / 2)*this.settings.frime;
         }
         return this.timeBetweenFloors(floor1, this.CurrentFloor);
     };

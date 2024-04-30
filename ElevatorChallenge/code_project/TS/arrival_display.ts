@@ -1,20 +1,22 @@
 class ArrivalDisplay {
-    display: HTMLDivElement;
-    waiteTime: number = 0;
+    private display: HTMLDivElement;
+    private waiteTime: number = 0;
+    private settings: settings;
 
-    constructor() {
+    constructor(settings: settings) {
         this.display = document.createElement("div");
         this.display.classList.add("ArrivalDisplay");
         this.updateDisplay();
+        this.settings =settings;
     }
     setTime(time: number): void {
-        this.waiteTime = time;
+        this.waiteTime = (time /2)/this.settings.frime;
     }
-    updateDisplay():void{
+    updateDisplay(): void {
         this.display.innerHTML = ` <p>${(Math.ceil(this.waiteTime).toString())}</p>`;
     }
     reduceTime(): void {
-        this.waiteTime -= 1/200;
+        this.waiteTime -= 1 / 200;
     }
     run(): void {
         if (this.waiteTime > 0) {

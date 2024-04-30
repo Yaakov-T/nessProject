@@ -2,14 +2,14 @@ class Building {
     private currentBuilding: HTMLDivElement;
     private floorsarea: HTMLDivElement;
     private floors: SingleFloor[];
-    private elevatorManagement: singleFloor;
-    private settings: settings;
+    private elevatorManagement: elevatorMenagment;
+    settings: settings;
 
     constructor(floorHeight: number, settings: settings) {
-        this.settings= settings;
+        this.settings = settings;
         this.floorsarea = document.createElement("div");
         this.currentBuilding = this.createBuild(floorHeight);
-        this.elevatorManagement = this.createElevatorMenage( floorHeight,);
+        this.elevatorManagement = this.createElevatorMenage(floorHeight,);
         this.floors = this.createFloors();
     }
 
@@ -23,9 +23,9 @@ class Building {
         return currentBuilding;
     }
 
-    createElevatorMenage(floorHeight:number): singleFloor {
-        const elevatorManagement = new singleFloor(this.settings.numElevators, this.settings);
-        elevatorManagement.elevationArea.style.height = `${floorHeight * this.settings.numFloors}px`;
+    createElevatorMenage(floorHeight: number): elevatorMenagment {
+        const elevatorManagement = new elevatorMenagment(this.settings.numElevators, this);
+        elevatorManagement.elevatorsArea.style.height = `${floorHeight * this.settings.numFloors}px`;
         return elevatorManagement;
     }
 
@@ -36,7 +36,7 @@ class Building {
         const floors: SingleFloor[] = [];
 
         for (let i = 0; i < this.settings.numFloors; i++) {
-            floors.push(new SingleFloor(this, this.settings.numFloors - i - 1));
+            floors.push(new SingleFloor(this, (this.settings.numFloors - i - 1)));
         }
         return floors;
     }
@@ -63,7 +63,7 @@ class Building {
         parent.appendChild(this.currentBuilding);
     }
     run(): void {
-        this.elevatorManagement.moveAllElevators();
+        this.elevatorManagement.run();
         this.floors.forEach((SingleFloor) => {
             SingleFloor.run();
         })

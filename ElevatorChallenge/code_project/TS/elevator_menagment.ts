@@ -1,26 +1,26 @@
-class singleFloor {
-    private settings: settings;
-    private elevatorsArea: HTMLDivElement;
+class elevatorMenagment{
+    private parent: Building;
+    private ElevatorsArea: HTMLDivElement;
     private elevators: Elevator[];
+    settings: settings;
 
-    constructor(numElevators: number, settings: settings) {
-        this.settings = settings;
+    constructor(numElevators: number, parent: Building) {
+        this.parent = parent;
+        this.settings = this.parent.settings;
         this.elevators = [];
         for (let i = 0; i < numElevators; i++) {
-            this.elevators.push(new Elevator(this.settings));
+            this.elevators.push(new Elevator(this));
         }
-        this.elevatorsArea = document.createElement('div');
-        this.elevationArea.classList.add("rowFlex");
+        this.ElevatorsArea = document.createElement('div');
+        this.ElevatorsArea.classList.add("rowFlex");
     }
-    get elevationArea(): HTMLDivElement {
-        return this.elevatorsArea;
+    get elevatorsArea(): HTMLDivElement {
+        return this.ElevatorsArea;
     }
     getOrder(floor: number): number| false {
-        // let minTime:number = this.elevators[0].checkTimeWithFloor(floor);
-        let minTime:number = 100;
+        let minTime:number = this.elevators[0].checkTimeWithFloor(floor);
         let elevatorIndex = 0;
-        for(let i =0 ; i < this.elevators.length; ++i) {
-            console.log(`elevator: ${i}`);
+        for(let i =1 ; i < this.elevators.length; ++i) {
             if(this.elevators[i].including(floor)){
                 return false;
             }
@@ -30,8 +30,8 @@ class singleFloor {
                 elevatorIndex = i;
             }
         }
-        this.elevators[elevatorIndex].addNewFloor(floor);
-        return minTime;
+        
+        return this.elevators[elevatorIndex].addNewFloor(floor);
     }
     appendToParent(parent: HTMLElement): void {
         this.elevators.forEach((elevator, i) => {
@@ -40,9 +40,9 @@ class singleFloor {
         });
         parent.appendChild(this.elevatorsArea);
     }
-    moveAllElevators(): void {
+    run(): void {
         this.elevators.forEach((elevator) => {
-            elevator.moveElevator();
+            elevator.run();
         })
     }
 }

@@ -3,9 +3,10 @@ class SingleFloor {
     constructor(Parent, floorNumber) {
         this.SingleFloor = document.createElement('div');
         this.parent = Parent;
+        this.settings = this.parent.settings;
         this.SingleFloor.style.height = '100%';
         this.floorNumber = floorNumber;
-        this.arrivalDisplay = new ArrivalDisplay();
+        this.arrivalDisplay = new ArrivalDisplay(this.settings);
         this.elevatorCallButton = new elevatorButton(this, this.arrivalDisplay);
         this.blackLine = new Line();
         this.floorSpace = new FloorSpace();
