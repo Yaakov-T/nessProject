@@ -5,6 +5,7 @@ class settings {
     private NumElevators: number = 3;
     private elevatorSRC: string = `./elements/elv.png`
     private audioSRC: string = `./elements/ding.mp3`
+    static frime: number;
 
     constructor() {
     }

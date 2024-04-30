@@ -11,10 +11,10 @@ class ArrivalDisplay {
         this.waiteTime = (time / 2) / this.settings.frime;
     }
     updateDisplay() {
-        this.display.innerHTML = ` <p>${(Math.ceil(this.waiteTime).toString())}</p>`;
+        this.display.innerHTML = `<p>${(Math.ceil(this.waiteTime).toString())}</p>`;
     }
     reduceTime() {
-        this.waiteTime -= 1 / 200;
+        this.waiteTime -= 1 / (4 * (this.settings.frime));
     }
     run() {
         if (this.waiteTime > 0) {

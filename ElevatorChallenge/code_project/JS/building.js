@@ -8,7 +8,9 @@ class Building {
         this.floors = this.createFloors();
     }
     getOrder(floorNum) {
-        return this.elevatorManagement.getOrder(floorNum);
+        let x = this.elevatorManagement.getOrder(floorNum);
+        console.log(x);
+        return x;
     }
     createBuild(floorHeight) {
         const currentBuilding = document.createElement("div");

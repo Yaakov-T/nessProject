@@ -94,7 +94,7 @@ class Elevator {
     }
     timeBetweenFloors(floor1: number, floor2: number | undefined): number {
         if (floor2 || floor2 == 0) {
-            return ((Math.abs(floor2 - floor1)) / 2) * this.settings.frime;
+            return (Math.abs((floor2 - floor1)) / 2 * this.settings.frime);
         }
         return this.timeBetweenFloors(floor1, this.CurrentFloor);
     };

@@ -14,7 +14,9 @@ class Building {
     }
 
     getOrder(floorNum: number): number | false {
-        return this.elevatorManagement.getOrder(floorNum);
+        let x= this.elevatorManagement.getOrder(floorNum);
+        console.log(x);
+        return x;
     }
 
     createBuild(floorHeight: number): HTMLDivElement {

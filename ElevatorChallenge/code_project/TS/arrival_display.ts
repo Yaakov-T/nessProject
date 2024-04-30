@@ -7,16 +7,16 @@ class ArrivalDisplay {
         this.display = document.createElement("div");
         this.display.classList.add("ArrivalDisplay");
         this.updateDisplay();
-        this.settings =settings;
+        this.settings = settings;
     }
     setTime(time: number): void {
-        this.waiteTime = (time /2)/this.settings.frime;
+        this.waiteTime = (time / 2) / this.settings.frime;
     }
     updateDisplay(): void {
-        this.display.innerHTML = ` <p>${(Math.ceil(this.waiteTime).toString())}</p>`;
+        this.display.innerHTML = `<p>${(Math.ceil(this.waiteTime).toString())}</p>`;
     }
     reduceTime(): void {
-        this.waiteTime -= 1 / 200;
+        this.waiteTime -= 1 / (4 * (this.settings.frime));
     }
     run(): void {
         if (this.waiteTime > 0) {
