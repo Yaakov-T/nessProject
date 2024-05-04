@@ -42,10 +42,7 @@ class Building {
         }
         return floors;
     }
-
-
-
-
+    
     get mycurrentBuilding(): HTMLDivElement {
         return this.currentBuilding;
     }

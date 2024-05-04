@@ -1,6 +1,6 @@
 class settings {
     private Frime: number = 50;
-    private NumBuildings: number = 1;
+    private NumBuildings: number = 2;
     private NumFloors: number = 7;
     private NumElevators: number = 3;
     private elevatorSRC: string = `./elements/elv.png`
@@ -9,7 +9,7 @@ class settings {
 
     constructor() {
     }
-    get frime ():number {return this.Frime;} 
+    get frime ():number {return this.Frime;} //frame
     get numBuildings():number {return this.NumBuildings;} 
     get numFloors ():number {return this.NumFloors;} 
     get numElevators ():number {return this.NumElevators;}   
