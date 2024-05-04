@@ -1,3 +1,5 @@
+const buildingArr: Building[] = [];
+const floorHeight: number = 120;
 let sett : settings= new settings();;
 
 const init = (): void => {
@@ -10,27 +12,28 @@ const createBuildings = () => {
     }
 }
 
-
-const buildingArr: Building[] = [];
-const floorHeight: number = 120;
-
-const DOMElement: HTMLElement | null = document.getElementById("buildingManagement");
-const buildingManagement : HTMLDivElement = document.createElement("div");
-if (DOMElement) {
+const DOMElementStyle = (DOMElement:HTMLElement):void =>{ 
     DOMElement.style.alignItems = ("center");
     DOMElement.style.width = (`${window.innerWidth}px`);
     DOMElement.style.paddingLeft = (`5%`);
     DOMElement.style.paddingRight = (`5%`);
-    DOMElement.appendChild(buildingManagement);
-    buildingManagement.style.display = ("flex");
-    buildingManagement.style.justifyContent = ("space-between");
+}
+
+
+const DOMElement: HTMLElement | null = document.getElementById("buildingErea");
+const buildingErea : HTMLDivElement = document.createElement("div");
+if (DOMElement) {
+    DOMElementStyle(DOMElement);
+    DOMElement.appendChild(buildingErea);
+    buildingErea.style.display = ("flex");
+    buildingErea.style.justifyContent = ("space-between");
 }
 const rander = (): void => {
-        buildingManagement.innerHTML = '';
+        buildingErea.innerHTML = '';
         // Append each building to buildingManagement
         buildingArr.forEach((building) => {
             building.mycurrentBuilding.style.maxWidth=`${90/sett.numBuildings}%`
-            building.appendToParent(buildingManagement);
+            building.appendToParent(buildingErea);
         });
 
     };
