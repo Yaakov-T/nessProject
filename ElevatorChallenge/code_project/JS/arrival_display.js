@@ -8,20 +8,20 @@ class ArrivalDisplay {
         this.settings = settings;
     }
     setTime(time) {
-        this.waiteTime = (time / 2) / this.settings.frime;
+        this.waiteTime = time / 2;
     }
     updateDisplay() {
-        this.display.innerHTML = `<p>${(Math.ceil(this.waiteTime).toString())}</p>`;
+        this.display.innerHTML = `<p>${((this.waiteTime).toString())}</p>`;
     }
     reduceTime() {
-        this.waiteTime -= 1 / (4 * (this.settings.frime));
+        this.waiteTime -= 0.5;
     }
     run() {
         if (this.waiteTime > 0) {
             this.reduceTime();
         }
-        if (this.waiteTime > 0) {
-        }
+        // if (this.waiteTime > 0) {
+        // }
         this.updateDisplay();
     }
     appendToParent(parent) {

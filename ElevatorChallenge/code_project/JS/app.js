@@ -1,17 +1,7 @@
 "use strict";
 const buildingArr = [];
-const floorHeight = 120;
-let sett = new settings();
+const sett = new settings();
 ;
-const init = () => {
-    createBuildings();
-    rander();
-};
-const createBuildings = () => {
-    for (let i = 0; i < sett.numBuildings; i++) {
-        buildingArr.push(new Building(floorHeight, sett));
-    }
-};
 const DOMElementStyle = (DOMElement) => {
     DOMElement.style.alignItems = ("center");
     DOMElement.style.width = (`${window.innerWidth}px`);
@@ -26,17 +16,26 @@ if (DOMElement) {
     buildingErea.style.display = ("flex");
     buildingErea.style.justifyContent = ("space-between");
 }
+const init = () => {
+    createBuildings();
+    rander();
+};
+const createBuildings = () => {
+    for (let i = 0; i < sett.numBuildings; i++) {
+        buildingArr.push(new Building(sett));
+    }
+};
 const rander = () => {
     buildingErea.innerHTML = '';
-    // Append each building to buildingManagement
     buildingArr.forEach((building) => {
         building.mycurrentBuilding.style.maxWidth = `${90 / sett.numBuildings}%`;
         building.appendToParent(buildingErea);
     });
 };
-const run = setInterval(() => {
+const run = () => {
     buildingArr.forEach((building) => {
         building.run();
     });
-}, 500 / sett.frime);
+};
+const intervalId = setInterval(run, sett.runtime);
 init();
