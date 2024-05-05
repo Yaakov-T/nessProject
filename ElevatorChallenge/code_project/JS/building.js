@@ -1,25 +1,23 @@
 "use strict";
 class Building {
-    constructor(floorHeight, settings) {
+    constructor(settings) {
         this.settings = settings;
         this.floorsarea = document.createElement("div");
-        this.currentBuilding = this.createBuild(floorHeight);
-        this.elevatorManagement = this.createElevatorMenage(floorHeight);
+        this.currentBuilding = this.createBuild();
+        this.elevatorManagement = this.createElevatorMenage();
         this.floors = this.createFloors();
     }
     getOrder(floorNum) {
-        let x = this.elevatorManagement.getOrder(floorNum);
-        console.log(x);
-        return x;
+        return this.elevatorManagement.getOrder(floorNum);
     }
-    createBuild(floorHeight) {
+    createBuild() {
         const currentBuilding = document.createElement("div");
-        currentBuilding.style.height = `${(floorHeight) * this.settings.numFloors}px`;
+        currentBuilding.style.height = `${(this.settings.floorHeight) * this.settings.numFloors}px`;
         return currentBuilding;
     }
-    createElevatorMenage(floorHeight) {
+    createElevatorMenage() {
         const elevatorManagement = new elevatorMenagment(this.settings.numElevators, this);
-        elevatorManagement.elevatorsArea.style.height = `${floorHeight * this.settings.numFloors}px`;
+        elevatorManagement.elevatorsArea.style.height = `${this.settings.floorHeight * this.settings.numFloors}px`;
         return elevatorManagement;
     }
     createFloors() {
@@ -48,9 +46,9 @@ class Building {
         parent.appendChild(this.currentBuilding);
     }
     run() {
-        this.elevatorManagement.run();
         this.floors.forEach((SingleFloor) => {
             SingleFloor.run();
         });
+        this.elevatorManagement.run();
     }
 }

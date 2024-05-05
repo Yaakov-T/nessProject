@@ -17,12 +17,6 @@ class Elevator {
         this.ElevatorElement = this.createElevator();
     };
 
-    // check if the floor in the argument is exists in the elevator
-    including(floor: number) {
-        return (floor === this.CurrentFloor ||
-            this.DestinationQueue.includes(floor))
-
-    }
     createElevator(): HTMLImageElement {
         const elevatorElement: HTMLImageElement = document.createElement('img');
         elevatorElement.src = this.settings.elevator;
@@ -32,53 +26,37 @@ class Elevator {
         elevatorElement.style.bottom = `${this.XPossition}px`;
         return elevatorElement;
     };
-
+    
     //Allows to receive the wrapping element and perform operations on it
     public get elevatorElement(): HTMLDivElement {
         return this.ElevatorElement;
     }
+
     //push the elementto the screen using the parents element
     appendToParent(parent: HTMLElement): void {
         parent.appendChild(this.elevatorElement);
     }
+
     timeToStay(): number {
-        return 4 * this.settings.frime;
+        return  this.settings.secondsToStay * this.settings.amountPerSecond;
     }
+
     addNewFloor(floor: number): number {
         const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
         this.SumOfTime += (newTime + this.timeToStay());
         this.DestinationQueue.push(floor);
-        return this.SumOfTime - this.timeToStay();
+        return (this.SumOfTime - this.timeToStay());
     }
-    run(): void {
-        if (this.SumOfTime) {
-            this.SumOfTime--;
-        }
-        if (this.TimeToWait > 0) {
-            this.TimeToWait--;
-        }
-        else {
-            this.audioElement.pause();
-            this.audioElement.currentTime = 0; // Reset playback to the beginning
-            this.addPart();
-            this.ElevatorElement.style.bottom = `${this.XPossition}px`
-            if (this.checkArrivalDestination()) {
-                this.openDoor();
-            };
-        }
-    }
-    addPart(): void {
-        if (this.XPossition < this.DestinationQueue[0] * 120) {
-            this.XPossition += 120 / this.settings.frime;
-        }
-        else if (this.XPossition > this.DestinationQueue[0] * 120) {
-            this.XPossition -= 120 / this.settings.frime;
-        }
+    // check if the floor in the argument is exists in the elevator
+    including(floor: number) {
+        return (floor === this.CurrentFloor ||
+            this.DestinationQueue.includes(floor))
+
     }
     checkArrivalDestination(): Boolean {
         return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 1;
     }
-
+    
     checkTimeWithFloor(floor: number): number {
         {
             let timeBetween: number;
@@ -90,19 +68,59 @@ class Elevator {
             }
             return (this.SumOfTime + timeBetween);
         }
-
+        
     }
     timeBetweenFloors(floor1: number, floor2: number | undefined): number {
         if (floor2 || floor2 == 0) {
-            return (Math.abs((floor2 - floor1)) / 2 * this.settings.frime);
+            return Math.abs(floor2 - floor1);
         }
         return this.timeBetweenFloors(floor1, this.CurrentFloor);
     };
+    
 
+
+    run(): void {
+        if(this.SumOfTime){
+            this.SumOfTime -= 1;
+        }
+        if (this.TimeToWait > 0) {
+            this.TimeToWait--;
+        }
+        else {
+            this.audioElement.pause();
+            let count = 0;
+            
+            const actionInterval = setInterval(() => {
+                if (count >= this.settings.frame) {
+                    clearInterval(actionInterval);
+                } else {
+                    this.moveElevator();
+                    count++;
+                }
+            }, (this.settings.runtime /this.settings.frame));
+        }
+    }
+    moveElevator(): void {
+        this.addPart();
+        this.ElevatorElement.style.bottom = `${this.XPossition}px`
+        if (this.checkArrivalDestination()) {
+            this.openDoor();
+        };
+    }
+    addPart(): void {
+        if (this.XPossition < this.DestinationQueue[0] * 120) {
+            this.XPossition += 120 / this.settings.frame;
+        }
+        else if (this.XPossition > this.DestinationQueue[0] * 120) {
+            this.XPossition -= 120 / this.settings.frame;
+        }
+    }
     openDoor(): void {
+        this.audioElement.currentTime = 0; // Reset playback to the beginning
         this.audioElement.play();
-        this.TimeToWait = 4 * this.settings.frime;
-        if (this.DestinationQueue.length > 0) {
+
+        this.TimeToWait = 4;
+        if(this.DestinationQueue.length > 0) {
             this.CurrentFloor = this.DestinationQueue.shift()
         }
 

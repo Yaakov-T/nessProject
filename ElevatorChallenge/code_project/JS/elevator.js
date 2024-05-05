@@ -12,11 +12,6 @@ class Elevator {
         this.ElevatorElement = this.createElevator();
     }
     ;
-    // check if the floor in the argument is exists in the elevator
-    including(floor) {
-        return (floor === this.CurrentFloor ||
-            this.DestinationQueue.includes(floor));
-    }
     createElevator() {
         const elevatorElement = document.createElement('img');
         elevatorElement.src = this.settings.elevator;
@@ -36,39 +31,18 @@ class Elevator {
         parent.appendChild(this.elevatorElement);
     }
     timeToStay() {
-        return 4 * this.settings.frime;
+        return this.settings.secondsToStay * this.settings.amountPerSecond;
     }
     addNewFloor(floor) {
         const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
         this.SumOfTime += (newTime + this.timeToStay());
         this.DestinationQueue.push(floor);
-        return this.SumOfTime - this.timeToStay();
+        return (this.SumOfTime - this.timeToStay());
     }
-    run() {
-        if (this.SumOfTime) {
-            this.SumOfTime--;
-        }
-        if (this.TimeToWait > 0) {
-            this.TimeToWait--;
-        }
-        else {
-            this.audioElement.pause();
-            this.audioElement.currentTime = 0; // Reset playback to the beginning
-            this.addPart();
-            this.ElevatorElement.style.bottom = `${this.XPossition}px`;
-            if (this.checkArrivalDestination()) {
-                this.openDoor();
-            }
-            ;
-        }
-    }
-    addPart() {
-        if (this.XPossition < this.DestinationQueue[0] * 120) {
-            this.XPossition += 120 / this.settings.frime;
-        }
-        else if (this.XPossition > this.DestinationQueue[0] * 120) {
-            this.XPossition -= 120 / this.settings.frime;
-        }
+    // check if the floor in the argument is exists in the elevator
+    including(floor) {
+        return (floor === this.CurrentFloor ||
+            this.DestinationQueue.includes(floor));
     }
     checkArrivalDestination() {
         return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 1;
@@ -87,14 +61,52 @@ class Elevator {
     }
     timeBetweenFloors(floor1, floor2) {
         if (floor2 || floor2 == 0) {
-            return (Math.abs((floor2 - floor1)) / 2 * this.settings.frime);
+            return Math.abs(floor2 - floor1);
         }
         return this.timeBetweenFloors(floor1, this.CurrentFloor);
     }
     ;
+    run() {
+        if (this.SumOfTime) {
+            this.SumOfTime -= 1;
+        }
+        if (this.TimeToWait > 0) {
+            this.TimeToWait--;
+        }
+        else {
+            this.audioElement.pause();
+            let count = 0;
+            const actionInterval = setInterval(() => {
+                if (count >= this.settings.frame) {
+                    clearInterval(actionInterval);
+                }
+                else {
+                    this.moveElevator();
+                    count++;
+                }
+            }, (this.settings.runtime / this.settings.frame));
+        }
+    }
+    moveElevator() {
+        this.addPart();
+        this.ElevatorElement.style.bottom = `${this.XPossition}px`;
+        if (this.checkArrivalDestination()) {
+            this.openDoor();
+        }
+        ;
+    }
+    addPart() {
+        if (this.XPossition < this.DestinationQueue[0] * 120) {
+            this.XPossition += 120 / this.settings.frame;
+        }
+        else if (this.XPossition > this.DestinationQueue[0] * 120) {
+            this.XPossition -= 120 / this.settings.frame;
+        }
+    }
     openDoor() {
+        this.audioElement.currentTime = 0; // Reset playback to the beginning
         this.audioElement.play();
-        this.TimeToWait = 4 * this.settings.frime;
+        this.TimeToWait = 4;
         if (this.DestinationQueue.length > 0) {
             this.CurrentFloor = this.DestinationQueue.shift();
         }

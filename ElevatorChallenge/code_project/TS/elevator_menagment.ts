@@ -33,6 +33,7 @@ class elevatorMenagment{
         
         return this.elevators[elevatorIndex].addNewFloor(floor);
     }
+    
     appendToParent(parent: HTMLElement): void {
         this.elevators.forEach((elevator, i) => {
             elevator.elevatorElement.style.left = `${115 * i + 8}px`;
@@ -40,6 +41,7 @@ class elevatorMenagment{
         });
         parent.appendChild(this.elevatorsArea);
     }
+
     run(): void {
         this.elevators.forEach((elevator) => {
             elevator.run();
