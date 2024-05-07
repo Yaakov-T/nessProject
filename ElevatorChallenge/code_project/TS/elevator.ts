@@ -26,7 +26,7 @@ class Elevator {
         elevatorElement.style.bottom = `${this.XPossition}px`;
         return elevatorElement;
     };
-    
+
     //Allows to receive the wrapping element and perform operations on it
     public get elevatorElement(): HTMLDivElement {
         return this.ElevatorElement;
@@ -38,7 +38,7 @@ class Elevator {
     }
 
     timeToStay(): number {
-        return  this.settings.secondsToStay * this.settings.amountPerSecond;
+        return this.settings.secondsToStay * this.settings.amountPerSecond;
     }
 
     addNewFloor(floor: number): number {
@@ -56,7 +56,7 @@ class Elevator {
     checkArrivalDestination(): Boolean {
         return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 1;
     }
-    
+
     checkTimeWithFloor(floor: number): number {
         {
             let timeBetween: number;
@@ -68,19 +68,20 @@ class Elevator {
             }
             return (this.SumOfTime + timeBetween);
         }
-        
     }
+
+    
     timeBetweenFloors(floor1: number, floor2: number | undefined): number {
         if (floor2 || floor2 == 0) {
             return Math.abs(floor2 - floor1);
         }
         return this.timeBetweenFloors(floor1, this.CurrentFloor);
     };
-    
+
 
 
     run(): void {
-        if(this.SumOfTime){
+        if (this.SumOfTime) {
             this.SumOfTime -= 1;
         }
         if (this.TimeToWait > 0) {
@@ -89,7 +90,7 @@ class Elevator {
         else {
             this.audioElement.pause();
             let count = 0;
-            
+
             const actionInterval = setInterval(() => {
                 if (count >= this.settings.frame) {
                     clearInterval(actionInterval);
@@ -97,7 +98,7 @@ class Elevator {
                     this.moveElevator();
                     count++;
                 }
-            }, (this.settings.runtime /this.settings.frame));
+            }, (this.settings.runtime / this.settings.frame));
         }
     }
     moveElevator(): void {
@@ -120,7 +121,7 @@ class Elevator {
         this.audioElement.play();
 
         this.TimeToWait = 4;
-        if(this.DestinationQueue.length > 0) {
+        if (this.DestinationQueue.length > 0) {
             this.CurrentFloor = this.DestinationQueue.shift()
         }
 
