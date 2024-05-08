@@ -1,9 +1,9 @@
-let system :createSystem;
-let sett : settings= new settings();
+let system: CreateSystem;
+let sett: Settings = Settings.getInstance();
 
 
-const DOMElementStyle = (DOMElement:HTMLElement):void =>{ 
-    DOMElement.style.minWidth = (`${window.innerWidth}px`);
+const DOMElementStyle = (DOMElement: HTMLElement): void => {
+    DOMElement.style.minWidth = `${window.innerWidth}px`;
 }
 
 const init = (): void => {
@@ -15,8 +15,7 @@ const init = (): void => {
         DOMElement.appendChild(buildingErea);
         buildingErea.classList.add("buildingErea");
     }
-
-    system = new createSystem(buildingErea, sett);
+    system = Factory.getInstance().createSystem(buildingErea);
 
 };
 
@@ -27,4 +26,3 @@ const run = () => {
 
 const intervalId = setInterval(run, sett.runtime);
 init();
-

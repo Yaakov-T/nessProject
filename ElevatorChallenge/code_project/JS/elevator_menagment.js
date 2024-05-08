@@ -1,11 +1,10 @@
 "use strict";
-class elevatorMenagment {
-    constructor(numElevators, parent) {
-        this.parent = parent;
-        this.settings = this.parent.settings;
+class ElevatorMenagment {
+    constructor() {
+        this.settings = Settings.getInstance();
         this.elevators = [];
-        for (let i = 0; i < numElevators; i++) {
-            this.elevators.push(new Elevator(this));
+        for (let i = 0; i < this.settings.numElevators; i++) {
+            this.elevators.push(new Elevator((115 * i + 8)));
         }
         this.ElevatorsArea = document.createElement('div');
         this.ElevatorsArea.classList.add("rowFlex");
@@ -30,7 +29,6 @@ class elevatorMenagment {
     }
     appendToParent(parent) {
         this.elevators.forEach((elevator, i) => {
-            elevator.elevatorElement.style.left = `${115 * i + 8}px`;
             elevator.appendToParent(this.elevatorsArea);
         });
         parent.appendChild(this.elevatorsArea);

@@ -1,13 +1,11 @@
 class ArrivalDisplay {
     private display: HTMLDivElement;
     private waiteTime: number = 0;
-    private settings: settings;
 
-    constructor(settings: settings) {
+    constructor() {
         this.display = document.createElement("div");
         this.display.classList.add("ArrivalDisplay");
         this.updateDisplay();
-        this.settings = settings;
     }
 
     setTime(time: number): void {

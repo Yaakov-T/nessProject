@@ -1,10 +1,9 @@
 "use strict";
-class elevatorButton {
-    constructor(parent, arrivalDisplay) {
+class ElevatorButton {
+    constructor(parent) {
         this.parent = parent;
         this.floorNumber = this.parent.getfloorNumber();
         this.button = this.createButton();
-        this.arrivalDisplay = arrivalDisplay;
     }
     createButton() {
         const button = document.createElement('button');

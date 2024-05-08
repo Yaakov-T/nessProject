@@ -3,13 +3,12 @@ class SingleFloor {
     constructor(Parent, floorNumber) {
         this.SingleFloor = document.createElement('div');
         this.parent = Parent;
-        this.settings = this.parent.settings;
-        this.SingleFloor.style.height = '100%';
+        this.settings = Settings.getInstance();
         this.floorNumber = floorNumber;
-        this.arrivalDisplay = new ArrivalDisplay(this.settings);
-        this.elevatorCallButton = new elevatorButton(this, this.arrivalDisplay);
-        this.blackLine = new Line();
-        this.floorSpace = new FloorSpace();
+        this.arrivalDisplay = Factory.getInstance().create("ArrivalDisplay", null);
+        this.elevatorCallButton = Factory.getInstance().create("ElevatorButton", this);
+        this.blackLine = Factory.getInstance().create("Line", null);
+        this.floorSpace = Factory.getInstance().create("FloorSpace", null);
     }
     getfloorNumber() {
         return this.floorNumber;

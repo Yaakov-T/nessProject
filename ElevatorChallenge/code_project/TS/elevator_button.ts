@@ -1,15 +1,13 @@
 
-class elevatorButton {
+class ElevatorButton {
     floorNumber: number;
     parent: SingleFloor;
     button: HTMLButtonElement;
-    arrivalDisplay: ArrivalDisplay
 
-    constructor(parent: SingleFloor, arrivalDisplay: ArrivalDisplay) {
+    constructor(parent: SingleFloor) {
         this.parent = parent;
         this.floorNumber = this.parent.getfloorNumber();
         this.button = this.createButton();
-        this.arrivalDisplay = arrivalDisplay;
     }
     createButton(): HTMLButtonElement {
         const button = document.createElement('button');

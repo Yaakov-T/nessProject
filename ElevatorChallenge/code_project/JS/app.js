@@ -1,8 +1,8 @@
 "use strict";
 let system;
-let sett = new settings();
+let sett = Settings.getInstance();
 const DOMElementStyle = (DOMElement) => {
-    DOMElement.style.minWidth = (`${window.innerWidth}px`);
+    DOMElement.style.minWidth = `${window.innerWidth}px`;
 };
 const init = () => {
     const DOMElement = document.getElementById("buildingErea");
@@ -12,7 +12,7 @@ const init = () => {
         DOMElement.appendChild(buildingErea);
         buildingErea.classList.add("buildingErea");
     }
-    system = new createSystem(buildingErea, sett);
+    system = Factory.getInstance().createSystem(buildingErea);
 };
 const run = () => {
     system.run();

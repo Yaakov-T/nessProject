@@ -1,23 +1,22 @@
 
 class SingleFloor {
-    private SingleFloor: HTMLDivElement= document.createElement('div');
+    private SingleFloor: HTMLDivElement = document.createElement('div');
     private parent: Building;
     private floorNumber: number;
-    private elevatorCallButton: elevatorButton;
+    private elevatorCallButton: ElevatorButton;
     private blackLine: Line;
     private floorSpace: FloorSpace;
     private arrivalDisplay: ArrivalDisplay;
-    private settings : settings;
+    private settings: Settings;
 
-    constructor(Parent: Building ,floorNumber: number) {
+    constructor(Parent: Building, floorNumber: number) {
         this.parent = Parent;
-        this.settings = this.parent.settings;
-        this.SingleFloor.style.height = '100%';
+        this.settings = Settings.getInstance();
         this.floorNumber = floorNumber;
-        this.arrivalDisplay = new ArrivalDisplay(this.settings);
-        this.elevatorCallButton = new elevatorButton(this, this.arrivalDisplay);
-        this.blackLine = new Line();
-        this.floorSpace = new FloorSpace();
+        this.arrivalDisplay = Factory.getInstance().create("ArrivalDisplay", null)
+        this.elevatorCallButton = Factory.getInstance().create("ElevatorButton", this);
+        this.blackLine = Factory.getInstance().create("Line",null);
+        this.floorSpace = Factory.getInstance().create("FloorSpace",null);
     }
     getfloorNumber(): number {
         return this.floorNumber;
@@ -32,10 +31,10 @@ class SingleFloor {
             this.setDisplay(display);
         }
     }
-    get singleFloor():HTMLDivElement{
+    get singleFloor(): HTMLDivElement {
         return this.SingleFloor;
     }
-    run():void{
+    run(): void {
         this.arrivalDisplay.run();
     }
     appendToParent(parent: HTMLElement): void {

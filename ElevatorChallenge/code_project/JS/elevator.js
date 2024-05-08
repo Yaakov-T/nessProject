@@ -1,34 +1,30 @@
 "use strict";
 class Elevator {
-    constructor(parent) {
+    constructor(yPossition) {
         this.SumOfTime = 0;
         this.CurrentFloor = 0;
         this.TimeToWait = 0;
         this.XPossition = 0;
-        this.parent = parent;
-        this.settings = this.parent.settings;
+        this.settings = Settings.getInstance();
         this.audioElement = new Audio(this.settings.audio);
         this.DestinationQueue = [];
-        this.ElevatorElement = this.createElevator();
+        this.ElevatorElement = this.createElevator(yPossition);
     }
     ;
-    createElevator() {
+    createElevator(yPossition) {
         const elevatorElement = document.createElement('img');
         elevatorElement.src = this.settings.elevator;
         elevatorElement.classList.add('elevatorStyle');
         elevatorElement.style.height = "110px";
         elevatorElement.style.width = "110px";
         elevatorElement.style.bottom = `${this.XPossition}px`;
+        elevatorElement.style.left = `${yPossition}px`;
         return elevatorElement;
     }
     ;
-    //Allows to receive the wrapping element and perform operations on it
-    get elevatorElement() {
-        return this.ElevatorElement;
-    }
-    //push the elementto the screen using the parents element
+    //push the element to the screen using the parents element
     appendToParent(parent) {
-        parent.appendChild(this.elevatorElement);
+        parent.appendChild(this.ElevatorElement);
     }
     timeToStay() {
         return this.settings.secondsToStay * this.settings.amountPerSecond;
@@ -43,9 +39,6 @@ class Elevator {
     including(floor) {
         return (floor === this.CurrentFloor ||
             this.DestinationQueue.includes(floor));
-    }
-    checkArrivalDestination() {
-        return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 1;
     }
     checkTimeWithFloor(floor) {
         {
@@ -87,6 +80,9 @@ class Elevator {
             }, (this.settings.runtime / this.settings.frame));
         }
     }
+    checkArrivalDestination() {
+        return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 0.1;
+    }
     moveElevator() {
         this.addPart();
         this.ElevatorElement.style.bottom = `${this.XPossition}px`;
@@ -96,11 +92,13 @@ class Elevator {
         ;
     }
     addPart() {
-        if (this.XPossition < this.DestinationQueue[0] * 120) {
-            this.XPossition += 120 / this.settings.frame;
-        }
-        else if (this.XPossition > this.DestinationQueue[0] * 120) {
-            this.XPossition -= 120 / this.settings.frame;
+        if (this.CurrentFloor || this.CurrentFloor == 0) {
+            if (this.CurrentFloor < this.DestinationQueue[0]) {
+                this.XPossition += 120 / this.settings.frame;
+            }
+            else if (this.CurrentFloor > this.DestinationQueue[0]) {
+                this.XPossition -= 120 / this.settings.frame;
+            }
         }
     }
     openDoor() {

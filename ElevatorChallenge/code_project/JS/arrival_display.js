@@ -1,11 +1,10 @@
 "use strict";
 class ArrivalDisplay {
-    constructor(settings) {
+    constructor() {
         this.waiteTime = 0;
         this.display = document.createElement("div");
         this.display.classList.add("ArrivalDisplay");
         this.updateDisplay();
-        this.settings = settings;
     }
     setTime(time) {
         this.waiteTime = time / 2;

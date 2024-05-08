@@ -1,16 +1,16 @@
-class createSystem {
+class CreateSystem {
     private buildingArr: Building[];
-    private sett: settings;
+    private settings: Settings;
 
-    constructor(buildingErea: HTMLDivElement ,Settings: settings) {
+    constructor(buildingErea: HTMLDivElement) {
         this.buildingArr = [];
-        this.sett = Settings;
+        this.settings = Settings.getInstance();
         this.createBuildings();
         this.appendToParent(buildingErea);
     }
     private createBuildings = () => {
-        for (let i = 0; i < this.sett.numBuildings; i++) {
-            this.buildingArr.push(new Building(this.sett));
+        for (let i = 0; i < this.settings.numBuildings; i++) {
+            this.buildingArr.push(Factory.getInstance().create( "Building",null));
         }
     }
     private appendToParent(parent: HTMLElement): void {
