@@ -1,5 +1,6 @@
 ﻿.blackline {
     height: 7px;
+    /* width: 245px; */
     background-color: #000000;
 }
 
@@ -11,7 +12,6 @@
     padding-left: 5%;
     padding-right: 5%;
 }
-
 
 .rowFlex {
     display: flex;

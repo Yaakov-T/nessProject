@@ -4,7 +4,7 @@ class Settings {
     private Frame: number = 100;
     private NumBuildings: number = 2;
     private NumFloors: number = 7;
-    private NumElevators: number = 1;
+    private NumElevators: number = 3;
     private Miliseconds: number = 1000;
     private AmountPerSecond = 2;
     private SecondsToStay: number = 2;

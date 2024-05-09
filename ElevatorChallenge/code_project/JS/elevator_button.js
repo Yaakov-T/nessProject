@@ -2,7 +2,7 @@
 class ElevatorButton {
     constructor(parent) {
         this.parent = parent;
-        this.floorNumber = this.parent.getfloorNumber();
+        this.floorNumber = this.parent.floorNumber;
         this.button = this.createButton();
     }
     createButton() {
@@ -20,5 +20,11 @@ class ElevatorButton {
     }
     orderElevator() {
         this.parent.getOrder();
+        this.button.disabled = true;
+        this.button.classList.add("greenFont");
+    }
+    freeButton() {
+        this.button.disabled = false;
+        this.button.classList.remove("greenFont");
     }
 }

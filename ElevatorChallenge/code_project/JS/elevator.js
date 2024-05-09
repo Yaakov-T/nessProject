@@ -5,15 +5,14 @@ class Elevator {
         this.CurrentFloor = 0;
         this.TimeToWait = 0;
         this.XPossition = 0;
-        this.settings = Settings.getInstance();
-        this.audioElement = new Audio(this.settings.audio);
+        this.audioElement = new Audio(Settings.getInstance().audio);
         this.DestinationQueue = [];
         this.ElevatorElement = this.createElevator(yPossition);
     }
     ;
     createElevator(yPossition) {
         const elevatorElement = document.createElement('img');
-        elevatorElement.src = this.settings.elevator;
+        elevatorElement.src = Settings.getInstance().elevator;
         elevatorElement.classList.add('elevatorStyle');
         elevatorElement.style.height = "110px";
         elevatorElement.style.width = "110px";
@@ -27,7 +26,7 @@ class Elevator {
         parent.appendChild(this.ElevatorElement);
     }
     timeToStay() {
-        return this.settings.secondsToStay * this.settings.amountPerSecond;
+        return Settings.getInstance().secondsToStay * Settings.getInstance().amountPerSecond;
     }
     addNewFloor(floor) {
         const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
@@ -41,16 +40,14 @@ class Elevator {
             this.DestinationQueue.includes(floor));
     }
     checkTimeWithFloor(floor) {
-        {
-            let timeBetween;
-            if (this.DestinationQueue.length > 0) {
-                timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
-            }
-            else {
-                timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
-            }
-            return (this.SumOfTime + timeBetween);
+        let timeBetween;
+        if (this.DestinationQueue.length > 0) {
+            timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
         }
+        else {
+            timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
+        }
+        return (this.SumOfTime + timeBetween);
     }
     timeBetweenFloors(floor1, floor2) {
         if (floor2 || floor2 == 0) {
@@ -70,34 +67,34 @@ class Elevator {
             this.audioElement.pause();
             let count = 0;
             const actionInterval = setInterval(() => {
-                if (count >= this.settings.frame) {
+                if (count >= Settings.getInstance().frame) {
                     clearInterval(actionInterval);
                 }
                 else {
                     this.moveElevator();
                     count++;
                 }
-            }, (this.settings.runtime / this.settings.frame));
+            }, (Settings.getInstance().runtime / Settings.getInstance().frame));
         }
     }
     checkArrivalDestination() {
         return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 0.1;
     }
     moveElevator() {
-        this.addPart();
+        this.moveDirection();
         this.ElevatorElement.style.bottom = `${this.XPossition}px`;
         if (this.checkArrivalDestination()) {
             this.openDoor();
         }
         ;
     }
-    addPart() {
+    moveDirection() {
         if (this.CurrentFloor || this.CurrentFloor == 0) {
             if (this.CurrentFloor < this.DestinationQueue[0]) {
-                this.XPossition += 120 / this.settings.frame;
+                this.XPossition += 120 / Settings.getInstance().frame;
             }
             else if (this.CurrentFloor > this.DestinationQueue[0]) {
-                this.XPossition -= 120 / this.settings.frame;
+                this.XPossition -= 120 / Settings.getInstance().frame;
             }
         }
     }

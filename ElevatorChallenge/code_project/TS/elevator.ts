@@ -6,18 +6,16 @@ class Elevator {
     private TimeToWait: number = 0;
     private XPossition: number = 0;
     private audioElement: HTMLAudioElement;
-    private settings: Settings;
 
     constructor(yPossition: number) {
-        this.settings = Settings.getInstance();
-        this.audioElement = new Audio(this.settings.audio);
+        this.audioElement = new Audio(Settings.getInstance().audio);
         this.DestinationQueue = [];
         this.ElevatorElement = this.createElevator(yPossition);
     };
 
-    createElevator(yPossition: number): HTMLImageElement {
+    private createElevator(yPossition: number): HTMLImageElement {
         const elevatorElement: HTMLImageElement = document.createElement('img');
-        elevatorElement.src = this.settings.elevator;
+        elevatorElement.src = Settings.getInstance().elevator;
         elevatorElement.classList.add('elevatorStyle');
         elevatorElement.style.height = "110px";
         elevatorElement.style.width = "110px";
@@ -33,7 +31,7 @@ class Elevator {
     }
 
     timeToStay(): number {
-        return this.settings.secondsToStay * this.settings.amountPerSecond;
+        return Settings.getInstance().secondsToStay * Settings.getInstance().amountPerSecond;
     }
 
     addNewFloor(floor: number): number {
@@ -43,13 +41,13 @@ class Elevator {
         return (this.SumOfTime - this.timeToStay());
     }
     // check if the floor in the argument is exists in the elevator
-    including(floor: number) {
+    including(floor: number): boolean {
         return (floor === this.CurrentFloor ||
             this.DestinationQueue.includes(floor))
     }
 
     checkTimeWithFloor(floor: number): number {
-        {
+        
             let timeBetween: number;
             if (this.DestinationQueue.length > 0) {
                 timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
@@ -58,7 +56,7 @@ class Elevator {
                 timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
             }
             return (this.SumOfTime + timeBetween);
-        }
+        
     }
 
     timeBetweenFloors(floor1: number, floor2: number | undefined): number {
@@ -82,13 +80,13 @@ class Elevator {
             let count = 0;
 
             const actionInterval = setInterval(() => {
-                if (count >= this.settings.frame) {
+                if (count >= Settings.getInstance().frame) {
                     clearInterval(actionInterval);
                 } else {
                     this.moveElevator();
                     count++;
                 }
-            }, (this.settings.runtime / this.settings.frame));
+            }, (Settings.getInstance().runtime / Settings.getInstance().frame));
         }
     }
 
@@ -96,19 +94,19 @@ class Elevator {
         return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 0.1;
     }
     moveElevator(): void {
-        this.addPart();
+        this.moveDirection();
         this.ElevatorElement.style.bottom = `${this.XPossition}px`
         if (this.checkArrivalDestination()) {
             this.openDoor();
         };
     }
-    addPart(): void {
+    moveDirection(): void {
         if (this.CurrentFloor || this.CurrentFloor == 0) {
             if (this.CurrentFloor < this.DestinationQueue[0]) {
-                this.XPossition += 120 / this.settings.frame;
+                this.XPossition += 120 / Settings.getInstance().frame;
             }
             else if (this.CurrentFloor > this.DestinationQueue[0]) {
-                this.XPossition -= 120 / this.settings.frame;
+                this.XPossition -= 120 / Settings.getInstance().frame;
             }
         }
     }

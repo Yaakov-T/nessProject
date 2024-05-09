@@ -1,6 +1,9 @@
 
 .floor {
   display: flex;
+  height: 110px;
+  padding-left: 3px;
+  padding-right: 3px;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -109,4 +112,8 @@
               hsla(210,100%,75%, .8) 0 0px 3px 2px, /* outer SD */
               hsla(210,50%,40%, .0) 0 -5px 6px 4px, /* outer SD */
               hsla(210,80%,95%, 0) 0 5px 6px 4px; /* outer HL */
+}
+
+.greenFont{
+  color: #46e60c;
 }

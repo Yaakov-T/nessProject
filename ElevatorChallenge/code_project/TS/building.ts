@@ -11,40 +11,40 @@ class Building {
         this.floors = this.createFloors();
     }
 
-    getOrder(floorNum: number): number | false {
-        return this.elevatorManagement.getOrder(floorNum);
-    }
-
-    createBuild(): HTMLDivElement {
+    
+    private createBuild(): HTMLDivElement {
         const currentBuilding: HTMLDivElement = document.createElement("div");
         currentBuilding.style.height = `${(Settings.getInstance().floorHeight) * Settings.getInstance().numFloors}px`;
         return currentBuilding;
     }
-
-    createElevatorMenage(): ElevatorMenagment {
+    
+    private createElevatorMenage(): ElevatorMenagment {
         const elevatorManagement = Factory.getInstance().create("ElevatorMenagment",null);
         elevatorManagement.elevatorsArea.style.height = `${Settings.getInstance().floorHeight * Settings.getInstance().numFloors}px`;
         return elevatorManagement;
     }
-
-    createFloors(): SingleFloor[] {
+    
+    private createFloors(): SingleFloor[] {
         this.floorsarea.style.maxWidth = "50%"
         this.floorsarea.style.minWidth = "120px"
-
+        
         const floors: SingleFloor[] = [];
-
+        
         for (let i = 0; i < Settings.getInstance().numFloors; i++) {
             floors.push(Factory.getInstance().create("SingleFloor",[this, (Settings.getInstance().numFloors - i - 1)]));
         }
         return floors;
     }
-
-
-
-
     get mycurrentBuilding(): HTMLDivElement {
         return this.currentBuilding;
     }
+    
+    
+    
+    getOrder(floorNum: number): number | false {
+        return this.elevatorManagement.getOrder(floorNum);
+    }
+
     appFloors():void{
         this.floorsarea.classList.add("columFlex");
         this.floors.forEach((floor) => {

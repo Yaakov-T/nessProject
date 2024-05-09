@@ -6,9 +6,6 @@ class Building {
         this.elevatorManagement = this.createElevatorMenage();
         this.floors = this.createFloors();
     }
-    getOrder(floorNum) {
-        return this.elevatorManagement.getOrder(floorNum);
-    }
     createBuild() {
         const currentBuilding = document.createElement("div");
         currentBuilding.style.height = `${(Settings.getInstance().floorHeight) * Settings.getInstance().numFloors}px`;
@@ -30,6 +27,9 @@ class Building {
     }
     get mycurrentBuilding() {
         return this.currentBuilding;
+    }
+    getOrder(floorNum) {
+        return this.elevatorManagement.getOrder(floorNum);
     }
     appFloors() {
         this.floorsarea.classList.add("columFlex");

@@ -4,7 +4,7 @@ class Settings {
         this.Frame = 100;
         this.NumBuildings = 2;
         this.NumFloors = 7;
-        this.NumElevators = 1;
+        this.NumElevators = 3;
         this.Miliseconds = 1000;
         this.AmountPerSecond = 2;
         this.SecondsToStay = 2;

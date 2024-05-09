@@ -15,8 +15,7 @@ const init = (): void => {
         DOMElement.appendChild(buildingErea);
         buildingErea.classList.add("buildingErea");
     }
-    system = Factory.getInstance().createSystem(buildingErea);
-
+    system = Factory.getInstance().create("CreateSystem", buildingErea);
 };
 
 const run = () => {
@@ -24,5 +23,5 @@ const run = () => {
 };
 
 
-const intervalId = setInterval(run, sett.runtime);
+const interval = setInterval(run, sett.runtime);
 init();

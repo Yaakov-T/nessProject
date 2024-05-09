@@ -8,11 +8,13 @@ class Factory {
                 case 'ElevatorMenagment':
                     return new ElevatorMenagment();
                 case 'ArrivalDisplay':
-                    return new ArrivalDisplay();
+                    return new ArrivalDisplay(parameter);
                 case 'Elevator':
                     return new Elevator(parameter);
                 case 'ElevatorButton':
                     return new ElevatorButton(parameter);
+                case 'CreateSystem':
+                    return new CreateSystem(parameter);
                 case 'SingleFloor':
                     if (parameter instanceof Array && parameter.length === 2) {
                         const [buildingInstance, numberParam] = parameter;
@@ -26,12 +28,6 @@ class Factory {
                 default:
                     throw new Error('Invalid class name provided.');
             }
-        };
-        this.createButton = (parent, arrivalDisplay) => {
-            return new ElevatorButton(parent);
-        };
-        this.createSystem = (buildingErea) => {
-            return new CreateSystem(buildingErea);
         };
     }
     static getInstance() {

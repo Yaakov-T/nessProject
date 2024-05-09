@@ -2,7 +2,7 @@
 class CreateSystem {
     constructor(buildingErea) {
         this.createBuildings = () => {
-            for (let i = 0; i < this.settings.numBuildings; i++) {
+            for (let i = 0; i < Settings.getInstance().numBuildings; i++) {
                 this.buildingArr.push(Factory.getInstance().create("Building", null));
             }
         };
@@ -12,7 +12,6 @@ class CreateSystem {
             });
         };
         this.buildingArr = [];
-        this.settings = Settings.getInstance();
         this.createBuildings();
         this.appendToParent(buildingErea);
     }

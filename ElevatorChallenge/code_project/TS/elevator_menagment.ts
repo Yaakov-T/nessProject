@@ -1,11 +1,10 @@
 class ElevatorMenagment {
     private ElevatorsArea: HTMLDivElement;
     private elevators: Elevator[];
-    private settings: Settings = Settings.getInstance();
 
     constructor() {
         this.elevators = [];
-        for (let i = 0; i < this.settings.numElevators; i++) {
+        for (let i = 0; i < Settings.getInstance().numElevators; i++) {
             this.elevators.push(new Elevator((115 * i + 8)));
         }
         this.ElevatorsArea = document.createElement('div');

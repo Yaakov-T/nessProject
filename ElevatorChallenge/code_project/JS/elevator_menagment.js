@@ -1,9 +1,8 @@
 "use strict";
 class ElevatorMenagment {
     constructor() {
-        this.settings = Settings.getInstance();
         this.elevators = [];
-        for (let i = 0; i < this.settings.numElevators; i++) {
+        for (let i = 0; i < Settings.getInstance().numElevators; i++) {
             this.elevators.push(new Elevator((115 * i + 8)));
         }
         this.ElevatorsArea = document.createElement('div');
