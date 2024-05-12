@@ -1,5 +1,5 @@
 "use strict";
-class settings {
+class Settings {
     constructor() {
         this.Frame = 100;
         this.NumBuildings = 2;
@@ -13,6 +13,12 @@ class settings {
         this.elevatorSRC = `./elements/elv.png`;
         this.audioSRC = `./elements/ding.mp3`;
     }
+    static getInstance() {
+        if (!Settings.instance) {
+            Settings.instance = new Settings();
+        }
+        return Settings.instance;
+    }
     get frame() { return this.Frame; }
     get floorHeight() { return this.FloorHeight; }
     get numBuildings() { return this.NumBuildings; }
@@ -24,3 +30,4 @@ class settings {
     get amountPerSecond() { return this.AmountPerSecond; }
     get secondsToStay() { return this.SecondsToStay; }
 }
+Settings.instance = null;

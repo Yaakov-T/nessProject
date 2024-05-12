@@ -1,10 +1,9 @@
 "use strict";
-class elevatorButton {
-    constructor(parent, arrivalDisplay) {
+class ElevatorButton {
+    constructor(parent) {
         this.parent = parent;
-        this.floorNumber = this.parent.getfloorNumber();
+        this.floorNumber = this.parent.floorNumber;
         this.button = this.createButton();
-        this.arrivalDisplay = arrivalDisplay;
     }
     createButton() {
         const button = document.createElement('button');
@@ -21,5 +20,11 @@ class elevatorButton {
     }
     orderElevator() {
         this.parent.getOrder();
+        this.button.disabled = true;
+        this.button.classList.add("greenFont");
+    }
+    freeButton() {
+        this.button.disabled = false;
+        this.button.classList.remove("greenFont");
     }
 }

@@ -1,17 +1,15 @@
 
-class elevatorButton {
-    floorNumber: number;
-    parent: SingleFloor;
-    button: HTMLButtonElement;
-    arrivalDisplay: ArrivalDisplay
+class ElevatorButton {
+    private floorNumber: number;
+    private parent: SingleFloor;
+    private button: HTMLButtonElement;
 
-    constructor(parent: SingleFloor, arrivalDisplay: ArrivalDisplay) {
+    constructor(parent: SingleFloor) {
         this.parent = parent;
-        this.floorNumber = this.parent.getfloorNumber();
+        this.floorNumber = this.parent.floorNumber;
         this.button = this.createButton();
-        this.arrivalDisplay = arrivalDisplay;
     }
-    createButton(): HTMLButtonElement {
+    private createButton(): HTMLButtonElement {
         const button = document.createElement('button');
         button.classList.add('metal', 'linear');
         button.textContent = `${this.floorNumber}`;
@@ -27,5 +25,11 @@ class elevatorButton {
     }
     orderElevator(): void {
         this.parent.getOrder();
+        this.button.disabled = true;
+        this.button.classList.add("greenFont");
+    }
+    freeButton(): void {
+        this.button.disabled = false;
+        this.button.classList.remove("greenFont");
     }
 }

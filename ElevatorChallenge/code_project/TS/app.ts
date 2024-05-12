@@ -1,46 +1,27 @@
-const buildingArr: Building[] = [];
-const sett : settings= new settings();;
+let system: CreateSystem;
+let sett: Settings = Settings.getInstance();
 
 
-const DOMElementStyle = (DOMElement:HTMLElement):void =>{ 
-    DOMElement.style.alignItems = ("center");
-    DOMElement.style.width = (`${window.innerWidth}px`);
-    DOMElement.style.paddingLeft = (`5%`);
-    DOMElement.style.paddingRight = (`5%`);
+const DOMElementStyle = (DOMElement: HTMLElement): void => {
+    DOMElement.style.minWidth = `${window.innerWidth}px`;
 }
-const DOMElement: HTMLElement | null = document.getElementById("buildingErea");
-const buildingErea : HTMLDivElement = document.createElement("div");
-if (DOMElement) {
-    DOMElementStyle(DOMElement);
-    DOMElement.appendChild(buildingErea);
-    buildingErea.style.display = ("flex");
-    buildingErea.style.justifyContent = ("space-between");
-}
-
-
 
 const init = (): void => {
-    createBuildings();
-    rander();
-};
-const createBuildings = () => {
-    for (let i = 0; i < sett.numBuildings; i++) {
-        buildingArr.push(new Building(sett));
+    const DOMElement = document.getElementById("buildingErea");
+    const buildingErea = document.createElement("div");
+
+    if (DOMElement) {
+        DOMElementStyle(DOMElement);
+        DOMElement.appendChild(buildingErea);
+        buildingErea.classList.add("buildingErea");
     }
-}
-const rander = (): void => {
-        buildingErea.innerHTML = '';
-        buildingArr.forEach((building) => {
-            building.mycurrentBuilding.style.maxWidth=`${90/sett.numBuildings}%`
-            building.appendToParent(buildingErea);
-        });
-    };
-const run = () => {
-    buildingArr.forEach((building) => {
-        building.run();
-    })
+    system = Factory.getInstance().create("CreateSystem", buildingErea);
 };
 
-const intervalId = setInterval(run, sett.runtime);
-init();
+const run = () => {
+    system.run();
+};
 
+
+const interval = setInterval(run, sett.runtime);
+init();

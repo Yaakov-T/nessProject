@@ -1,9 +1,9 @@
 class Line {
-    line: HTMLElement;
+    private line: HTMLElement;
 
     constructor() {
         this.line = document.createElement('div');
-        this.line.className = "blackline";
+        this.line.classList.add("blackline");
     }
 
     appendToParent(parent: HTMLElement): void {

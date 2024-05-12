@@ -1,41 +1,21 @@
 "use strict";
-const buildingArr = [];
-const sett = new settings();
-;
+let system;
+let sett = Settings.getInstance();
 const DOMElementStyle = (DOMElement) => {
-    DOMElement.style.alignItems = ("center");
-    DOMElement.style.width = (`${window.innerWidth}px`);
-    DOMElement.style.paddingLeft = (`5%`);
-    DOMElement.style.paddingRight = (`5%`);
+    DOMElement.style.minWidth = `${window.innerWidth}px`;
 };
-const DOMElement = document.getElementById("buildingErea");
-const buildingErea = document.createElement("div");
-if (DOMElement) {
-    DOMElementStyle(DOMElement);
-    DOMElement.appendChild(buildingErea);
-    buildingErea.style.display = ("flex");
-    buildingErea.style.justifyContent = ("space-between");
-}
 const init = () => {
-    createBuildings();
-    rander();
-};
-const createBuildings = () => {
-    for (let i = 0; i < sett.numBuildings; i++) {
-        buildingArr.push(new Building(sett));
+    const DOMElement = document.getElementById("buildingErea");
+    const buildingErea = document.createElement("div");
+    if (DOMElement) {
+        DOMElementStyle(DOMElement);
+        DOMElement.appendChild(buildingErea);
+        buildingErea.classList.add("buildingErea");
     }
-};
-const rander = () => {
-    buildingErea.innerHTML = '';
-    buildingArr.forEach((building) => {
-        building.mycurrentBuilding.style.maxWidth = `${90 / sett.numBuildings}%`;
-        building.appendToParent(buildingErea);
-    });
+    system = Factory.getInstance().create("CreateSystem", buildingErea);
 };
 const run = () => {
-    buildingArr.forEach((building) => {
-        building.run();
-    });
+    system.run();
 };
-const intervalId = setInterval(run, sett.runtime);
+const interval = setInterval(run, sett.runtime);
 init();
