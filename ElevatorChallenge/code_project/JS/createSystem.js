@@ -6,6 +6,11 @@ class CreateSystem {
                 this.buildingArr.push(Factory.getInstance().create("Building", null));
             }
         };
+        this.appendToParent = (parent) => {
+            this.buildingArr.forEach((building) => {
+                building.appendToParent(parent);
+            });
+        };
         this.run = () => {
             this.buildingArr.forEach((building) => {
                 building.run();
@@ -14,10 +19,5 @@ class CreateSystem {
         this.buildingArr = [];
         this.createBuildings();
         this.appendToParent(buildingErea);
-    }
-    appendToParent(parent) {
-        this.buildingArr.forEach((building) => {
-            building.appendToParent(parent);
-        });
     }
 }

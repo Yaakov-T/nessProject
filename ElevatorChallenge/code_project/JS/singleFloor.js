@@ -2,6 +2,30 @@
 class SingleFloor {
     constructor(Parent, floorNumber) {
         this.SingleFloor = document.createElement('div');
+        this.setDisplay = (time) => {
+            this.arrivalDisplay.setTime(time);
+        };
+        this.getOrder = () => {
+            const display = this.parent.getOrder(this.FloorNumber);
+            if (display) {
+                this.setDisplay(display);
+            }
+        };
+        this.freeButton = () => {
+            this.elevatorCallButton.freeButton();
+        };
+        this.run = () => {
+            this.arrivalDisplay.run();
+        };
+        this.appendToParent = (parent) => {
+            // Append elements to the singleFloor container
+            this.blackLine.appendToParent(this.singleFloor);
+            this.floorSpace.appendToParent(this.singleFloor);
+            this.elevatorCallButton.appendToParent(this.floorSpace.floorSpace); // Append button to floorSpace
+            this.arrivalDisplay.appendToParent(this.floorSpace.floorSpace); // Append display to floorSpace
+            // Append singleFloor container to the specified parent element
+            parent.appendChild(this.singleFloor);
+        };
         this.parent = Parent;
         this.settings = Settings.getInstance();
         this.FloorNumber = floorNumber;
@@ -13,31 +37,7 @@ class SingleFloor {
     get floorNumber() {
         return this.FloorNumber;
     }
-    setDisplay(time) {
-        this.arrivalDisplay.setTime(time);
-    }
-    getOrder() {
-        const display = this.parent.getOrder(this.FloorNumber);
-        if (display) {
-            this.setDisplay(display);
-        }
-    }
     get singleFloor() {
         return this.SingleFloor;
-    }
-    freeButton() {
-        this.elevatorCallButton.freeButton();
-    }
-    run() {
-        this.arrivalDisplay.run();
-    }
-    appendToParent(parent) {
-        // Append elements to the singleFloor container
-        this.blackLine.appendToParent(this.singleFloor);
-        this.floorSpace.appendToParent(this.singleFloor);
-        this.elevatorCallButton.appendToParent(this.floorSpace.floorSpace); // Append button to floorSpace
-        this.arrivalDisplay.appendToParent(this.floorSpace.floorSpace); // Append display to floorSpace
-        // Append singleFloor container to the specified parent element
-        parent.appendChild(this.singleFloor);
     }
 }
