@@ -7,6 +7,7 @@ class ElevatorMenagment {
         }
         this.ElevatorsArea = document.createElement('div');
         this.ElevatorsArea.classList.add("rowFlex");
+        this.ElevatorsArea.style.width = `${Settings.getInstance().numElevators * 130}px`;
     }
     get elevatorsArea() {
         return this.ElevatorsArea;

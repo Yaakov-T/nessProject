@@ -1,12 +1,15 @@
 ﻿.blackline {
     height: 7px;
-    /* width: 245px; */
+    width:100%;
     background-color: #000000;
 }
+.DOMElementStyle{
+    width: auto;
 
+}
 .parent-container {
     display:flex;
-    width: 100%;
+    width: auto;
     justify-content: center;
     align-items: center;
     padding-left: 5%;
@@ -14,32 +17,33 @@
 }
 
 .rowFlex {
+    width: auto;
     display: flex;
-    flex-grow: 1;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     padding: 0px;
 }
 
-.buildingErea{
+.allBuildingErea{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    width: auto;
 }
 .columFlex {
     justify-content: space-between;
     display: flex;
     height: 100%;
+    width: auto;
     flex-direction: column;
-    /* align-items: flex-end; */
 }
 
 .elevator-management {
-    /* border: 2px double red; */
     display: flex;
     flex-grow: 1;
     margin-left: 5px;
     position: relative;
+    width: auto;
 }
 
 .elevatorStyle {

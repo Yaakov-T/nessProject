@@ -17,7 +17,6 @@ class CreateSystem {
     }
     appendToParent(parent) {
         this.buildingArr.forEach((building) => {
-            building.mycurrentBuilding.style.maxWidth = `${window.innerWidth / 3}%`;
             building.appendToParent(parent);
         });
     }

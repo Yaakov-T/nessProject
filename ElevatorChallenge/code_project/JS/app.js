@@ -2,17 +2,18 @@
 let system;
 let sett = Settings.getInstance();
 const DOMElementStyle = (DOMElement) => {
-    DOMElement.style.minWidth = `${window.innerWidth}px`;
+    DOMElement.classList.add("DOMElementStyle");
+    DOMElement.style.minWidth = `100%`;
 };
 const init = () => {
-    const DOMElement = document.getElementById("buildingErea");
-    const buildingErea = document.createElement("div");
+    const DOMElement = document.getElementById("DOMElement");
+    const allBuildingsErea = document.createElement("div");
     if (DOMElement) {
         DOMElementStyle(DOMElement);
-        DOMElement.appendChild(buildingErea);
-        buildingErea.classList.add("buildingErea");
+        DOMElement.appendChild(allBuildingsErea);
+        allBuildingsErea.classList.add("allBuildingErea");
     }
-    system = Factory.getInstance().create("CreateSystem", buildingErea);
+    system = Factory.getInstance().create("CreateSystem", allBuildingsErea);
 };
 const run = () => {
     system.run();

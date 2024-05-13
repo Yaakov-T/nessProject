@@ -6,7 +6,7 @@ class Line {
         this.line.classList.add("blackline");
     }
 
-    appendToParent(parent: HTMLElement): void {
+    appendToParent = (parent: HTMLElement): void => {
         parent.appendChild(this.line);
     }
 }

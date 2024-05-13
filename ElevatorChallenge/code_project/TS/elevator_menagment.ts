@@ -9,11 +9,14 @@ class ElevatorMenagment {
         }
         this.ElevatorsArea = document.createElement('div');
         this.ElevatorsArea.classList.add("rowFlex");
+        this.ElevatorsArea.style.width =`${Settings.getInstance().numElevators*130}px`
     }
+
     get elevatorsArea(): HTMLDivElement {
         return this.ElevatorsArea;
     }
-    getOrder(floor: number): number | false {
+    
+    getOrder = (floor: number): number | false =>{
         let minTime: number = this.elevators[0].checkTimeWithFloor(floor);
         let elevatorIndex = 0;
         for (let i = 1; i < this.elevators.length; ++i) {
@@ -30,14 +33,14 @@ class ElevatorMenagment {
         return this.elevators[elevatorIndex].addNewFloor(floor);
     }
 
-    appendToParent(parent: HTMLElement): void {
+    appendToParent = (parent: HTMLElement): void => {
         this.elevators.forEach((elevator, i) => {
             elevator.appendToParent(this.elevatorsArea);
         });
         parent.appendChild(this.elevatorsArea);
     }
 
-    run(): void {
+    run = (): void =>{
         this.elevators.forEach((elevator) => {
             elevator.run();
         })

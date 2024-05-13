@@ -2,7 +2,7 @@ class Settings {
     private static instance: Settings | null = null;
 
     private Frame: number = 100;
-    private NumBuildings: number = 2;
+    private NumBuildings: number = 7;
     private NumFloors: number = 7;
     private NumElevators: number = 3;
     private Miliseconds: number = 1000;

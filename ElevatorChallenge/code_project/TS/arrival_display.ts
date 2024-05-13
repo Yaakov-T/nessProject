@@ -10,19 +10,22 @@ class ArrivalDisplay {
         this.updateDisplay();
     }
 
-    setTime(time: number): void {
+    setTime =(time: number): void => {
         this.waiteTime = time / 2;
     }
-    private updateDisplay(): void {
+    
+    private updateDisplay=(): void => {
         this.display.innerHTML = `<p>${((this.waiteTime).toString())}</p>`;
     }
-    private reduceTime(): void {
+
+    private reduceTime =(): void => {
         this.waiteTime -= 0.5;
         if (this.waiteTime==-2){
             this.parent.freeButton();
         }
     }
-    run(): void {
+    
+    run =(): void =>{
         if (this.waiteTime >= -2) {
             this.reduceTime();
         }
@@ -32,7 +35,7 @@ class ArrivalDisplay {
 
     }
 
-    appendToParent(parent: HTMLElement): void {
+    appendToParent=(parent: HTMLElement): void => {
         parent.appendChild(this.display);
     }
 }

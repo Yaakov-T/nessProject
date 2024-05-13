@@ -13,7 +13,7 @@ class Elevator {
         this.ElevatorElement = this.createElevator(yPossition);
     };
 
-    private createElevator(yPossition: number): HTMLImageElement {
+    private createElevator = (yPossition: number): HTMLImageElement =>{
         const elevatorElement: HTMLImageElement = document.createElement('img');
         elevatorElement.src = Settings.getInstance().elevator;
         elevatorElement.classList.add('elevatorStyle');
@@ -26,27 +26,28 @@ class Elevator {
 
 
     //push the element to the screen using the parents element
-    appendToParent(parent: HTMLElement): void {
+    appendToParent = (parent: HTMLElement): void => {
         parent.appendChild(this.ElevatorElement);
     }
 
-    timeToStay(): number {
+    timeToStay = (): number => {
         return Settings.getInstance().secondsToStay * Settings.getInstance().amountPerSecond;
     }
 
-    addNewFloor(floor: number): number {
+    addNewFloor = (floor: number): number => {
         const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
         this.SumOfTime += (newTime + this.timeToStay());
         this.DestinationQueue.push(floor);
         return (this.SumOfTime - this.timeToStay());
     }
+
     // check if the floor in the argument is exists in the elevator
-    including(floor: number): boolean {
+    including = (floor: number): boolean =>{
         return (floor === this.CurrentFloor ||
             this.DestinationQueue.includes(floor))
     }
 
-    checkTimeWithFloor(floor: number): number {
+    checkTimeWithFloor = (floor: number): number => {
         
             let timeBetween: number;
             if (this.DestinationQueue.length > 0) {
@@ -59,7 +60,7 @@ class Elevator {
         
     }
 
-    timeBetweenFloors(floor1: number, floor2: number | undefined): number {
+    timeBetweenFloors = (floor1: number, floor2: number | undefined): number => {
         if (floor2 || floor2 == 0) {
             return Math.abs(floor2 - floor1);
         }
@@ -67,8 +68,8 @@ class Elevator {
     };
 
 
-
-    run(): void {
+///////////////////////////////////////////////////
+    run = (): void => {
         if (this.SumOfTime) {
             this.SumOfTime -= 1;
         }
@@ -90,17 +91,17 @@ class Elevator {
         }
     }
 
-    checkArrivalDestination(): Boolean {
+    checkArrivalDestination = (): Boolean =>{
         return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 0.1;
     }
-    moveElevator(): void {
+    moveElevator = (): void =>{
         this.moveDirection();
         this.ElevatorElement.style.bottom = `${this.XPossition}px`
         if (this.checkArrivalDestination()) {
             this.openDoor();
         };
     }
-    moveDirection(): void {
+    moveDirection = (): void =>{
         if (this.CurrentFloor || this.CurrentFloor == 0) {
             if (this.CurrentFloor < this.DestinationQueue[0]) {
                 this.XPossition += 120 / Settings.getInstance().frame;
@@ -110,7 +111,7 @@ class Elevator {
             }
         }
     }
-    openDoor(): void {
+    openDoor = (): void => {
         this.audioElement.currentTime = 0; // Reset playback to the beginning
         this.audioElement.play();
 

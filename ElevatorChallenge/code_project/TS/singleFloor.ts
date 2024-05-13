@@ -22,25 +22,30 @@ class SingleFloor {
         return this.FloorNumber;
     }
 
-    setDisplay(time: number):void {
+    get singleFloor(): HTMLDivElement {
+        return this.SingleFloor;
+    }
+
+    setDisplay = (time: number):void => {
         this.arrivalDisplay.setTime(time);
     }
-    getOrder(): void {
+
+    getOrder = (): void =>{
         const display: number | false = this.parent.getOrder(this.FloorNumber);
         if (display) {
             this.setDisplay(display);
         }
     }
-    get singleFloor(): HTMLDivElement {
-        return this.SingleFloor;
-    }
-    freeButton():void{
+
+    freeButton = ():void => {
         this.elevatorCallButton.freeButton();
     }
-    run(): void {
+
+    run = (): void => {
         this.arrivalDisplay.run();
     }
-    appendToParent(parent: HTMLElement): void {
+    
+    appendToParent = (parent: HTMLElement): void => {
         // Append elements to the singleFloor container
         this.blackLine.appendToParent(this.singleFloor);
         this.floorSpace.appendToParent(this.singleFloor);

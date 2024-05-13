@@ -3,7 +3,7 @@ class Factory {
 
     private constructor() { }
 
-    static getInstance(): Factory {
+    static getInstance = (): Factory => {
         if (!Factory.instance) {
             Factory.instance = new Factory();
         }

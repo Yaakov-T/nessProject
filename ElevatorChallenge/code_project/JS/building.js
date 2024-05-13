@@ -17,8 +17,7 @@ class Building {
         return elevatorManagement;
     }
     createFloors() {
-        this.floorsarea.style.maxWidth = "50%";
-        this.floorsarea.style.minWidth = "120px";
+        this.floorsarea.style.minWidth = "160px";
         const floors = [];
         for (let i = 0; i < Settings.getInstance().numFloors; i++) {
             floors.push(Factory.getInstance().create("SingleFloor", [this, (Settings.getInstance().numFloors - i - 1)]));
