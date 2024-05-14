@@ -26,7 +26,7 @@ class Factory {
                 return new ElevatorButton(parameter);
             }
             else if (className === 'CreateSystem' && parameter instanceof HTMLDivElement) {
-                return new CreateSystem(parameter);
+                return new BuildingsSystem(parameter);
             }
             else if ((className === 'SingleFloor' && parameter instanceof Array) && parameter.length === 2) {
                 const [buildingInstance, numberParam] = parameter;

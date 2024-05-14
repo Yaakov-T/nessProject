@@ -1,4 +1,4 @@
-class CreateSystem {
+class BuildingsSystem {
     private buildingArr: Building[];
 
     constructor(buildingErea: HTMLDivElement) {

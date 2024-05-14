@@ -1,5 +1,5 @@
 "use strict";
-class CreateSystem {
+class BuildingsSystem {
     constructor(buildingErea) {
         this.createBuildings = () => {
             for (let i = 0; i < Settings.getInstance().numBuildings; i++) {

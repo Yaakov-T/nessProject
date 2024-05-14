@@ -1,4 +1,4 @@
-let system: CreateSystem;
+let system: BuildingsSystem;
 let sett: Settings = Settings.getInstance();
 
 
