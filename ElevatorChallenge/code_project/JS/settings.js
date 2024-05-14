@@ -2,7 +2,7 @@
 class Settings {
     constructor() {
         this.Frame = 100;
-        this.NumBuildings = 7;
+        this.NumBuildings = 3;
         this.NumFloors = 7;
         this.NumElevators = 3;
         this.Miliseconds = 1000;

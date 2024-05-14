@@ -13,7 +13,7 @@ class Elevator {
         this.ElevatorElement = this.createElevator(yPossition);
     };
 
-    private createElevator = (yPossition: number): HTMLImageElement =>{
+    private createElevator = (yPossition: number): HTMLImageElement => {
         const elevatorElement: HTMLImageElement = document.createElement('img');
         elevatorElement.src = Settings.getInstance().elevator;
         elevatorElement.classList.add('elevatorStyle');
@@ -42,22 +42,22 @@ class Elevator {
     }
 
     // check if the floor in the argument is exists in the elevator
-    including = (floor: number): boolean =>{
+    including = (floor: number): boolean => {
         return (floor === this.CurrentFloor ||
             this.DestinationQueue.includes(floor))
     }
 
     checkTimeWithFloor = (floor: number): number => {
-        
-            let timeBetween: number;
-            if (this.DestinationQueue.length > 0) {
-                timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
-            }
-            else {
-                timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
-            }
-            return (this.SumOfTime + timeBetween);
-        
+
+        let timeBetween: number;
+        if (this.DestinationQueue.length > 0) {
+            timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
+        }
+        else {
+            timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
+        }
+        return (this.SumOfTime + timeBetween);
+
     }
 
     timeBetweenFloors = (floor1: number, floor2: number | undefined): number => {
@@ -68,16 +68,17 @@ class Elevator {
     };
 
 
-///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////
     run = (): void => {
         if (this.SumOfTime) {
             this.SumOfTime -= 1;
         }
-        if (this.TimeToWait > 0) {
-            this.TimeToWait--;
+        this.TimeToWait--;
+        if (this.TimeToWait == 0) {
+            this.closeDoor();
+
         }
         else {
-            this.audioElement.pause();
             let count = 0;
 
             const actionInterval = setInterval(() => {
@@ -91,17 +92,19 @@ class Elevator {
         }
     }
 
-    checkArrivalDestination = (): Boolean =>{
+    checkArrivalDestination = (): Boolean => {
         return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 0.1;
     }
-    moveElevator = (): void =>{
-        this.moveDirection();
-        this.ElevatorElement.style.bottom = `${this.XPossition}px`
-        if (this.checkArrivalDestination()) {
-            this.openDoor();
-        };
+    moveElevator = (): void => {
+        if (this.TimeToWait <= 0) {
+            this.moveDirection();
+            this.ElevatorElement.style.bottom = `${this.XPossition}px`
+            if (this.checkArrivalDestination()) {
+                this.openDoor();
+            };
+        }
     }
-    moveDirection = (): void =>{
+    moveDirection = (): void => {
         if (this.CurrentFloor || this.CurrentFloor == 0) {
             if (this.CurrentFloor < this.DestinationQueue[0]) {
                 this.XPossition += 120 / Settings.getInstance().frame;
@@ -112,14 +115,18 @@ class Elevator {
         }
     }
     openDoor = (): void => {
-        this.audioElement.currentTime = 0; // Reset playback to the beginning
         this.audioElement.play();
 
         this.TimeToWait = 4;
+
+    }
+    closeDoor(): void {
+        this.audioElement.pause();
+        this.audioElement.currentTime = 0; // Reset playback to the beginning
+
         if (this.DestinationQueue.length > 0) {
             this.CurrentFloor = this.DestinationQueue.shift()
         }
-
     }
 }
 

@@ -54,11 +54,11 @@ class Elevator {
             if (this.SumOfTime) {
                 this.SumOfTime -= 1;
             }
-            if (this.TimeToWait > 0) {
-                this.TimeToWait--;
+            this.TimeToWait--;
+            if (this.TimeToWait == 0) {
+                this.closeDoor();
             }
             else {
-                this.audioElement.pause();
                 let count = 0;
                 const actionInterval = setInterval(() => {
                     if (count >= Settings.getInstance().frame) {
@@ -75,12 +75,14 @@ class Elevator {
             return Math.abs(this.DestinationQueue[0] * 120 - this.XPossition) < 0.1;
         };
         this.moveElevator = () => {
-            this.moveDirection();
-            this.ElevatorElement.style.bottom = `${this.XPossition}px`;
-            if (this.checkArrivalDestination()) {
-                this.openDoor();
+            if (this.TimeToWait <= 0) {
+                this.moveDirection();
+                this.ElevatorElement.style.bottom = `${this.XPossition}px`;
+                if (this.checkArrivalDestination()) {
+                    this.openDoor();
+                }
+                ;
             }
-            ;
         };
         this.moveDirection = () => {
             if (this.CurrentFloor || this.CurrentFloor == 0) {
@@ -93,16 +95,19 @@ class Elevator {
             }
         };
         this.openDoor = () => {
-            this.audioElement.currentTime = 0; // Reset playback to the beginning
             this.audioElement.play();
             this.TimeToWait = 4;
-            if (this.DestinationQueue.length > 0) {
-                this.CurrentFloor = this.DestinationQueue.shift();
-            }
         };
         this.audioElement = new Audio(Settings.getInstance().audio);
         this.DestinationQueue = [];
         this.ElevatorElement = this.createElevator(yPossition);
     }
     ;
+    closeDoor() {
+        this.audioElement.pause();
+        this.audioElement.currentTime = 0; // Reset playback to the beginning
+        if (this.DestinationQueue.length > 0) {
+            this.CurrentFloor = this.DestinationQueue.shift();
+        }
+    }
 }
