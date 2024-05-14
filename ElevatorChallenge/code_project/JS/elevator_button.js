@@ -16,6 +16,8 @@ class ElevatorButton {
         };
         this.orderElevator = () => {
             this.parent.getOrder();
+        };
+        this.lockButton = () => {
             this.button.disabled = true;
             this.button.classList.add("greenFont");
         };

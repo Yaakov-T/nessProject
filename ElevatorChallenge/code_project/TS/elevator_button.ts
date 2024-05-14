@@ -27,10 +27,12 @@ class ElevatorButton {
 
     orderElevator = (): void=> {
         this.parent.getOrder();
+    }
+
+    lockButton = (): void =>{
         this.button.disabled = true;
         this.button.classList.add("greenFont");
     }
-    
     freeButton = (): void => {
         this.button.disabled = false;
         this.button.classList.remove("greenFont");

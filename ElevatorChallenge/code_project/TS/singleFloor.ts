@@ -34,6 +34,7 @@ class SingleFloor {
         const display: number | false = this.parent.getOrder(this.FloorNumber);
         if (display) {
             this.setDisplay(display);
+            this.elevatorCallButton.lockButton();
         }
     }
 
