@@ -34,30 +34,23 @@ class Elevator {
         return Settings.getInstance().secondsToStay * Settings.getInstance().amountPerSecond;
     }
 
-    addNewFloor = (floor: number): number => {
-        const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
-        this.SumOfTime += (newTime + this.timeToStay());
-        this.DestinationQueue.push(floor);
-        return (this.SumOfTime - this.timeToStay());
-    }
-
     // check if the floor in the argument is exists in the elevator
     including = (floor: number): boolean => {
-        return (floor === this.CurrentFloor ||
+        return (//floor === this.CurrentFloor ||
             this.DestinationQueue.includes(floor))
     }
 
+    addNewFloor = (floor: number): number => {
+        const timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1])
+        this.SumOfTime += (timeBetween + this.timeToStay());
+        this.DestinationQueue.push(floor);
+        return (this.SumOfTime - this.timeToStay());
+    }
+    
+
     checkTimeWithFloor = (floor: number): number => {
-
-        let timeBetween: number;
-        if (this.DestinationQueue.length > 0) {
-            timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
-        }
-        else {
-            timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
-        }
+        const timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
         return (this.SumOfTime + timeBetween);
-
     }
 
     timeBetweenFloors = (floor1: number, floor2: number | undefined): number => {
@@ -116,7 +109,7 @@ class Elevator {
     }
     openDoor = (): void => {
         this.audioElement.play();
-
+        this.CurrentFloor= undefined;
         this.TimeToWait = 4;
 
     }

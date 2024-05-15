@@ -22,25 +22,19 @@ class Elevator {
         this.timeToStay = () => {
             return Settings.getInstance().secondsToStay * Settings.getInstance().amountPerSecond;
         };
+        // check if the floor in the argument is exists in the elevator
+        this.including = (floor) => {
+            return ( //floor === this.CurrentFloor ||
+            this.DestinationQueue.includes(floor));
+        };
         this.addNewFloor = (floor) => {
-            const newTime = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
-            this.SumOfTime += (newTime + this.timeToStay());
+            const timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
+            this.SumOfTime += (timeBetween + this.timeToStay());
             this.DestinationQueue.push(floor);
             return (this.SumOfTime - this.timeToStay());
         };
-        // check if the floor in the argument is exists in the elevator
-        this.including = (floor) => {
-            return (floor === this.CurrentFloor ||
-                this.DestinationQueue.includes(floor));
-        };
         this.checkTimeWithFloor = (floor) => {
-            let timeBetween;
-            if (this.DestinationQueue.length > 0) {
-                timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
-            }
-            else {
-                timeBetween = this.timeBetweenFloors(floor, this.CurrentFloor);
-            }
+            const timeBetween = this.timeBetweenFloors(floor, this.DestinationQueue[this.DestinationQueue.length - 1]);
             return (this.SumOfTime + timeBetween);
         };
         this.timeBetweenFloors = (floor1, floor2) => {
@@ -96,6 +90,7 @@ class Elevator {
         };
         this.openDoor = () => {
             this.audioElement.play();
+            this.CurrentFloor = undefined;
             this.TimeToWait = 4;
         };
         this.audioElement = new Audio(Settings.getInstance().audio);

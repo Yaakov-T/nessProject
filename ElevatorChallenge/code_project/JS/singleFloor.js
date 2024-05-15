@@ -7,7 +7,7 @@ class SingleFloor {
         };
         this.getOrder = () => {
             const display = this.parent.getOrder(this.FloorNumber);
-            if (display) {
+            if (display || display === 0) {
                 this.setDisplay(display);
                 this.elevatorCallButton.lockButton();
             }

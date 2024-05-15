@@ -15,8 +15,8 @@ class SingleFloor {
         this.FloorNumber = floorNumber;
         this.arrivalDisplay = Factory.getInstance().create("ArrivalDisplay", this)
         this.elevatorCallButton = Factory.getInstance().create("ElevatorButton", this);
-        this.blackLine = Factory.getInstance().create("Line",null);
-        this.floorSpace = Factory.getInstance().create("FloorSpace",null);
+        this.blackLine = Factory.getInstance().create("Line", null);
+        this.floorSpace = Factory.getInstance().create("FloorSpace", null);
     }
     get floorNumber(): number {
         return this.FloorNumber;
@@ -26,26 +26,26 @@ class SingleFloor {
         return this.SingleFloor;
     }
 
-    setDisplay = (time: number):void => {
+    setDisplay = (time: number): void => {
         this.arrivalDisplay.setTime(time);
     }
 
-    getOrder = (): void =>{
+    getOrder = (): void => {
         const display: number | false = this.parent.getOrder(this.FloorNumber);
-        if (display) {
+        if (display || display === 0) {
             this.setDisplay(display);
             this.elevatorCallButton.lockButton();
         }
     }
 
-    freeButton = ():void => {
+    freeButton = (): void => {
         this.elevatorCallButton.freeButton();
     }
 
     run = (): void => {
         this.arrivalDisplay.run();
     }
-    
+
     appendToParent = (parent: HTMLElement): void => {
         // Append elements to the singleFloor container
         this.blackLine.appendToParent(this.singleFloor);
